@@ -33,6 +33,11 @@ public class Surface : MonoBehaviour {
     {
         indicator.GetComponent<MeshRenderer>().enabled = false;
     }
+
+    void OnMouseClick()
+    {
+        
+    }
 }
 
 public class Link

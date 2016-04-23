@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Battlefield : MonoBehaviour {
     public int width, depth;
     public float frequency;
     public float scale;
     public Surface baseSurface;
+    Surface selectedSurface;
 
     ArrayList[,] surfaces;
     // Use this for initialization
