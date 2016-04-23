@@ -23,6 +23,7 @@ public class Battlefield : MonoBehaviour {
             {
                 float height = scale * Mathf.PerlinNoise( x / frequency, y / frequency);
                 createSurface(x, y, height);
+                createBox(x, y, height);
             }
         }
     }
@@ -65,5 +66,13 @@ public class Battlefield : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void createBox(int x, int y, float height)
+    {
+        var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.SetParent(transform);
+        cube.transform.localPosition = new Vector3(x, height / 2 - 0.01f, y);
+        cube.transform.localScale = new Vector3(1, height, 1);
     }
 }
