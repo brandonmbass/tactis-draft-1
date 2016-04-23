@@ -19,7 +19,6 @@ public class SurfaceIndicator : MonoBehaviour {
 
     public void select()
     {
-        Debug.Log("CLICKED");
         state = State.SELECTED;
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material = mselect;

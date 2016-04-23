@@ -22,9 +22,7 @@ public class Surface : MonoBehaviour {
 
     void OnMouseExit() { selector.surfaceMouseExit(this); }
 
-    void OnMouseDown() {
-        Debug.Log("MOUSE CLICKED");
-        selector.surfaceClick(this); }
+    void OnMouseDown() { selector.surfaceClick(this); }
 }
 
 public class Link
