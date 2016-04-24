@@ -1,38 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Surface : MonoBehaviour {
     public ArrayList neighbors = new ArrayList();
-    GameObject indicator;
+    public Selector selector;
 
     public void Start()
     {
-        indicator = transform.GetChild(0).gameObject;
         transform.rotation = Quaternion.AngleAxis(90f, new Vector3(1, 0, 0));
-        indicator.GetComponent<MeshRenderer>().enabled = false;
+        selector = GameObject.FindObjectOfType<Selector>();
     }
 
     public void addNeighbor(Surface newNeighbor)
     {
         Link link = new Link(this, newNeighbor);
         neighbors.Add(link);
-
     }
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void OnMouseEnter() { selector.surfaceMouseEnter(this); }
 
-    void OnMouseEnter()
-    {
-        indicator.GetComponent<MeshRenderer>().enabled = true;
-    }
+    void OnMouseExit() { selector.surfaceMouseExit(this); }
 
-    void OnMouseExit()
-    {
-        indicator.GetComponent<MeshRenderer>().enabled = false;
-    }
+    void OnMouseDown() { selector.surfaceClick(this); }
 }
 
 public class Link

@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Battlefield : MonoBehaviour {
     public int width, depth;
     public float frequency;
     public float scale;
     public Surface baseSurface;
+    Surface selectedSurface;
 
     ArrayList[,] surfaces;
     // Use this for initialization
@@ -28,10 +30,10 @@ public class Battlefield : MonoBehaviour {
         }
     }
 
-    //public Surface getSurface(int x, int y, float height)
-    //{
-
-    //}
+    public List<Surface> shortestPath(Surface begin, Surface goal)
+    {
+        return null;
+    }
 
     public void createSurface(int x, int y, float height)
     {
