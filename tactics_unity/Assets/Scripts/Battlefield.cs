@@ -38,7 +38,7 @@ public class Battlefield : MonoBehaviour {
         if (surfaces[x, y] == null)
             surfaces[x, y] = new ArrayList();
 
-        Surface surface = Instantiate(baseSurface, transform.position + new Vector3(x, height, y ), transform.rotation) as Surface;
+        var surface = Instantiate(baseSurface, transform.position + new Vector3(x - width/2, height, y-width/2 ), transform.rotation) as Surface;
         surface.transform.SetParent(transform);
         surfaces[x, y].Add(surface);
 
@@ -72,7 +72,7 @@ public class Battlefield : MonoBehaviour {
     {
         var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.SetParent(transform);
-        cube.transform.localPosition = new Vector3(x, height / 2 - 0.01f, y);
+        cube.transform.localPosition = new Vector3(x - width / 2, height / 2 - 0.01f, y - width / 2);
         cube.transform.localScale = new Vector3(1, height, 1);
     }
 }
