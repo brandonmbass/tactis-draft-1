@@ -30,10 +30,10 @@ public class Battlefield : MonoBehaviour {
         }
     }
 
-    //public Surface getSurface(int x, int y, float height)
-    //{
-
-    //}
+    public List<Surface> shortestPath(Surface begin, Surface goal)
+    {
+        return null;
+    }
 
     public void createSurface(int x, int y, float height)
     {
