@@ -30,8 +30,21 @@ public class Battlefield : MonoBehaviour {
         }
     }
 
-    public List<Surface> shortestPath(Surface begin, Surface goal)
+    public List<Surface> shortestPath(Surface start, Surface goal)
     {
+        ArrayList frontier = new ArrayList();
+        ArrayList from = new ArrayList();
+
+        frontier.Add(start);
+        from.Add(start);
+
+        while(! (frontier.Count > 0) )
+        {
+            //Surface current = frontier.
+        }
+
+
+
         return null;
     }
 
