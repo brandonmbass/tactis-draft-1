@@ -8,6 +8,7 @@ public class Battlefield : MonoBehaviour {
     public float frequency;
     public float scale;
     public Surface baseSurface;
+    public Unit baseUnit;
     Surface selectedSurface;
 
     ArrayList[,] surfaces;
@@ -28,6 +29,10 @@ public class Battlefield : MonoBehaviour {
                 createBox(x, y, height);
             }
         }
+
+
+        Unit unit = Instantiate( baseUnit );
+        
     }
 
     public List<Surface> shortestPath(Surface start, Surface goal)
@@ -42,9 +47,7 @@ public class Battlefield : MonoBehaviour {
         {
             //Surface current = frontier.
         }
-
-
-
+        
         return null;
     }
 
