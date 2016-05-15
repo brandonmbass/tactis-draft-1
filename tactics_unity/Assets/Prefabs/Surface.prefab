@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 434744}
   - 114: {fileID: 11493320}
   - 64: {fileID: 6445780}
+  - 114: {fileID: 11421886}
   m_Layer: 0
   m_Name: Surface
   m_TagString: Surface
@@ -119,6 +120,17 @@ MonoBehaviour:
   mselect: {fileID: 2100000, guid: a43572338a31a274183ffa0e4015fd63, type: 2}
   mhilight: {fileID: 2100000, guid: 476512ce4fde46e4dbec76bc86e4d480, type: 2}
   state: 2
+--- !u!114 &11421886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d11a76992004b43b6807fcf7a4e551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11493320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51abd8bd02f3bf047bddf0e140878586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selector: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

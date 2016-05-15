@@ -4,12 +4,11 @@ using System;
 
 public class Surface : MonoBehaviour {
     public ArrayList neighbors = new ArrayList();
-    public Selector selector;
+    public OpenState selector;
 
     public void Start()
     {
         transform.rotation = Quaternion.AngleAxis(90f, new Vector3(1, 0, 0));
-        selector = GameObject.FindObjectOfType<Selector>();
     }
 
     public void addNeighbor(Surface newNeighbor)
@@ -17,12 +16,6 @@ public class Surface : MonoBehaviour {
         Link link = new Link(this, newNeighbor);
         neighbors.Add(link);
     }
-
-    void OnMouseEnter() { selector.surfaceMouseEnter(this); }
-
-    void OnMouseExit() { selector.surfaceMouseExit(this); }
-
-    void OnMouseDown() { selector.surfaceClick(this); }
 }
 
 public class Link
