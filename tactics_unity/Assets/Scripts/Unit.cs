@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Unit : MonoBehaviour {
-
+    Surface current_surface;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +12,9 @@ public class Unit : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void SetSurface(Surface surface)
+    {
+        current_surface = surface;
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SurfaceIndicator : MonoBehaviour {
+public class SurfaceView : MonoBehaviour {
     public Material mselect;
     public Material mhilight;
     

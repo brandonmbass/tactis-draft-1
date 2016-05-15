@@ -3,49 +3,44 @@ using System.Collections;
 using System;
 
 public class OpenState : BattlefieldState {
-    Surface selectedSurface;
+    SurfaceSelector surfaceSelector = new SurfaceSelector();
+    public OpenState(Battlefield battlefield, BattlefieldController controller) : base(battlefield, controller) { }
 
     public override void MouseDown(Transform transform)
     {
         Surface surface = transform.GetComponent<Surface>();
         if (surface != null)
-            SurfaceMouseDown(surface);
+        {
+            surfaceSelector.SurfaceMouseDown(surface);
+        }
     }
 
     public override void MouseEnter(Transform transform)
     {
         Surface surface = transform.GetComponent<Surface>();
         if (surface != null)
-            SurfaceMouseEnter(surface);
+            surfaceSelector.Enter(surface);
     }
 
     public override void MouseExit(Transform transform)
     {
         Surface surface = transform.GetComponent<Surface>();
         if (surface != null)
-            SurfaceMouseExit(surface);
+            surfaceSelector.Exit(surface);
     }
 
-    internal void SurfaceMouseDown(Surface surface)
+    internal override void OnEnter()
     {
-        if (selectedSurface != null)
-            selectedSurface.GetComponentInChildren<SurfaceIndicator>().hide();
-                
-        selectedSurface = surface;
-        selectedSurface.GetComponentInChildren<SurfaceIndicator>().select();
+        
     }
 
-    internal void SurfaceMouseEnter(Surface surface)
+    internal override void OnExit()
     {
-        var indicator = surface.GetComponentInChildren<SurfaceIndicator>();
-        if (indicator.state != SurfaceIndicator.State.SELECTED)
-            indicator.hilight();
+        surfaceSelector.clear();
     }
 
-    internal void SurfaceMouseExit(Surface surface)
+    internal override void OnUpdate()
     {
-        var indicator = surface.GetComponentInChildren<SurfaceIndicator>();
-        if (indicator.state != SurfaceIndicator.State.SELECTED)
-            indicator.hide();
+        
     }
 }

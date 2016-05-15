@@ -24,15 +24,11 @@ public class Battlefield : MonoBehaviour {
         {
             for (int y = 0; y < width; y++)
             {
-                float height = scale * Mathf.PerlinNoise( x / frequency, y / frequency);
+                float height = scale * Mathf.PerlinNoise(x / frequency, y / frequency);
                 createSurface(x, y, height);
                 createBox(x, y, height);
             }
         }
-
-
-        Unit unit = Instantiate( baseUnit );
-        
     }
 
     public List<Surface> shortestPath(Surface start, Surface goal)
@@ -84,6 +80,12 @@ public class Battlefield : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void CreateUnit(Surface surface)
+    {
+        Unit unit = Instantiate(baseUnit);
+        surface.AddUnit(unit);
     }
 
     public void createBox(int x, int y, float height)
