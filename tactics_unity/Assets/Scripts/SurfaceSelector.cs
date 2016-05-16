@@ -28,6 +28,11 @@ public class SurfaceSelector {
 
     public void clear()
     {
+        if (selectedSurface == null)
+        {
+            return;
+        }
+
         var view = selectedSurface.GetComponent<SurfaceView>();
         view.hide();
         selectedSurface = null;

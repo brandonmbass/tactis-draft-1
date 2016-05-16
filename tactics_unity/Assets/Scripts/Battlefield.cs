@@ -9,7 +9,6 @@ public class Battlefield : MonoBehaviour {
     public float scale;
     public Surface baseSurface;
     public Unit baseUnit;
-    Surface selectedSurface;
 
     ArrayList[,] surfaces;
     // Use this for initialization

@@ -5,50 +5,42 @@ using System.Collections.Generic;
 
 public class BattlefieldController : MonoBehaviour {
     public Battlefield battlefield;
-    BattlefieldState state;
-    Dictionary<String, BattlefieldState> states;
     Stack<BattlefieldState> stack = new Stack<BattlefieldState>();
 
 	// Use this for initialization
 	void Start () {
-        states = new Dictionary<String, BattlefieldState>() {
-            {"OPEN", new OpenState(battlefield, this)},
-            {"UNIT_ADDER", new UnitAdderState(battlefield, this)}
-        };
-        state = states["OPEN"];
+        PushState<OpenState>();
     }
 
     internal void PopState()
     {
-        if (stack.Count > 0)
-        {
-            state = stack.Pop();
-        }
-        else
-        {
-            state = states["OPEN"];
-        }
+        State.OnExit();
+        stack.Pop();
+        State.OnEnter();
     }
-    public void PushState(String state_name)
+    public void PushState<T>() where T : BattlefieldState
     {
+        var state = (T)Activator.CreateInstance(typeof(T), battlefield, this);
+
+        if (State != null)
+        {
+            State.OnExit();
+        }
+
         stack.Push(state);
-        state = states[state_name];
+        State.OnEnter();
     }
 
-    public BattlefieldState GetState()
+    public BattlefieldState State
     {
-        return state;
-    }
-
-    public void SetState(string state_name)
-    {
-        state.OnExit();
-        state = states[state_name];
-        state.OnEnter();
+        get
+        {
+            return stack.Count > 0 ? stack.Peek() : null;
+        }        
     }
 
     // Update is called once per frame
     void Update () {
-        state.OnUpdate();
+        State.OnUpdate();
 	}
 }

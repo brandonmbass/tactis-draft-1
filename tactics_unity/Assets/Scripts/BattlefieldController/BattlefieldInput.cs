@@ -9,15 +9,15 @@ public class BattlefieldInput : MonoBehaviour {
         battlefieldController = FindObjectOfType<BattlefieldController>();
     }
     
-    void OnMouseEnter() { battlefieldController.GetState().MouseEnter(transform); }
+    void OnMouseEnter() { battlefieldController.State.MouseEnter(transform); }
 
-    void OnMouseExit() { battlefieldController.GetState().MouseExit(transform); }
+    void OnMouseExit() { battlefieldController.State.MouseExit(transform); }
 
-    void OnMouseDown() { battlefieldController.GetState().MouseDown(transform); }
+    void OnMouseDown() { battlefieldController.State.MouseDown(transform); }
 
-    void OnMouseUp() { battlefieldController.GetState().MouseUp(transform); }
+    void OnMouseUp() { battlefieldController.State.MouseUp(transform); }
 
-    void OnMouseOver() { battlefieldController.GetState().MouseOver(transform); }
+    void OnMouseOver() { battlefieldController.State.MouseOver(transform); }
 
-    void OnMouseClick() { battlefieldController.GetState().MouseClick(transform); }
+    void OnMouseClick() { battlefieldController.State.MouseClick(transform); }
 }
