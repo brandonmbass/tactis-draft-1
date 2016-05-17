@@ -6,41 +6,34 @@ public class OpenState : BattlefieldState {
     SurfaceSelector surfaceSelector = new SurfaceSelector();
     public OpenState(Battlefield battlefield, BattlefieldController controller) : base(battlefield, controller) { }
 
-    public override void MouseDown(Transform transform)
+    public override void Interact(Interaction interaction, string name, Transform transform)
     {
-        Surface surface = transform.GetComponent<Surface>();
-        if (surface != null)
+        switch (name)
         {
-            surfaceSelector.SurfaceMouseDown(surface);
+            case "ADD_UNIT":
+                controller.PushState<UnitAdderState>();
+                break;
         }
     }
 
-    public override void MouseEnter(Transform transform)
+    public override void Interact(Interaction interaction, Surface surface)
     {
-        Surface surface = transform.GetComponent<Surface>();
-        if (surface != null)
-            surfaceSelector.Enter(surface);
+        switch (interaction)
+        {
+            case Interaction.MOUSE_DOWN:
+                surfaceSelector.SurfaceMouseDown(surface);
+                break;
+            case Interaction.MOUSE_ENTER:
+                surfaceSelector.Enter(surface);
+                break;
+            case Interaction.MOUSE_EXIT:
+                surfaceSelector.Exit(surface);
+                break;
+        }
     }
-
-    public override void MouseExit(Transform transform)
-    {
-        Surface surface = transform.GetComponent<Surface>();
-        if (surface != null)
-            surfaceSelector.Exit(surface);
-    }
-
-    internal override void OnEnter()
-    {
-        
-    }
-
+  
     internal override void OnExit()
     {
         surfaceSelector.clear();
-    }
-
-    internal override void OnUpdate()
-    {
-        
     }
 }

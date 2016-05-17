@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class BattlefieldController : MonoBehaviour {
     public Battlefield battlefield;
+
     Stack<BattlefieldState> stack = new Stack<BattlefieldState>();
 
 	// Use this for initialization
@@ -30,7 +31,7 @@ public class BattlefieldController : MonoBehaviour {
         stack.Push(state);
         State.OnEnter();
     }
-
+    
     public BattlefieldState State
     {
         get
@@ -43,4 +44,18 @@ public class BattlefieldController : MonoBehaviour {
     void Update () {
         State.OnUpdate();
 	}
+
+    public void ButtonPress(String name){ State.Interact(Interaction.MOUSE_CLICK, name, transform); }
+    public void Interact(Interaction interaction, Surface transform) { State.Interact(interaction, transform); }
+    public void Interact(Interaction interaction, Unit transform) { State.Interact(interaction, transform); }
+}
+
+public enum Interaction
+{
+    MOUSE_ENTER,
+    MOUSE_EXIT,
+    MOUSE_DOWN,
+    MOUSE_UP,
+    MOUSE_OVER,
+    MOUSE_CLICK
 }
