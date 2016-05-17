@@ -11,15 +11,12 @@ public abstract class BattlefieldState {
         this.battlefield = battlefield;
         this.controller = controller;
     }
+    
+    public virtual void Interact(Interaction interaction, Surface transform) { }
+    public virtual void Interact(Interaction interaction, Unit transform) { }
+    public virtual void Interact(Interaction interaction, String buttonName, Transform transform) { }
 
-    public virtual void MouseEnter(Transform transform) { }
-    public virtual void MouseExit(Transform transform) { }
-    public virtual void MouseDown(Transform transform) { }
-    public virtual void MouseOver(Transform transform) { }
-    public virtual void MouseUp(Transform transform) { }
-    public virtual void MouseClick(Transform transform) { }
-
-    internal abstract void OnExit();
-    internal abstract void OnUpdate();
-    internal abstract void OnEnter();
+    internal virtual void OnExit() { }
+    internal virtual void OnUpdate() { }
+    internal virtual void OnEnter() { }
 }
