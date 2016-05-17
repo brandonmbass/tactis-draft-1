@@ -421,7 +421,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 121678043}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.56632656
+  m_Size: 0.58265305
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25830de4cb8c3d142bab1e6fe277fa53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battlefield: {fileID: 242402178}
+  Battlefield: {fileID: 242402178}
 --- !u!1 &544902359 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100004, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 2}
@@ -1600,6 +1600,8 @@ GameObject:
   - 224: {fileID: 1103487832}
   - 222: {fileID: 1103487835}
   - 114: {fileID: 1103487834}
+  - 114: {fileID: 1103487837}
+  - 114: {fileID: 1103487836}
   - 114: {fileID: 1103487833}
   m_Layer: 5
   m_Name: Button
@@ -1664,18 +1666,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1103487834}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 242402180}
-        m_MethodName: PushState
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: UNIT_ADDER
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1103487834
@@ -1711,6 +1702,31 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1103487831}
+--- !u!114 &1103487836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1103487831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec251d7f7c6efae4f84d56d55df9b451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 1103487833}
+  BattlefieldController: {fileID: 1103487837}
+--- !u!114 &1103487837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1103487831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25830de4cb8c3d142bab1e6fe277fa53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Battlefield: {fileID: 242402178}
 --- !u!1 &1144356907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,7 +1765,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 425}
+  m_AnchoredPosition: {x: 0, y: 980}
   m_SizeDelta: {x: 0, y: 980}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1144356909
@@ -2431,6 +2447,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
