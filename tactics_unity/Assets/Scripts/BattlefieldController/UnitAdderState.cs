@@ -10,14 +10,14 @@ public class UnitAdderState : BattlefieldState {
     {
         switch (interaction)
         {
-            case Interaction.MOUSE_DOWN:
+            case Interaction.MouseDown:
                 battlefield.CreateUnit(surface);
                 controller.PopState();
                 break;
-            case Interaction.MOUSE_ENTER:
+            case Interaction.MouseEnter:
                 surfaceSelector.Enter(surface);
                 break;
-            case Interaction.MOUSE_EXIT:
+            case Interaction.MouseExit:
                 surfaceSelector.Exit(surface);
                 break;
         }

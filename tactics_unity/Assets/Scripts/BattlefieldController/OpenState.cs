@@ -20,13 +20,13 @@ public class OpenState : BattlefieldState {
     {
         switch (interaction)
         {
-            case Interaction.MOUSE_DOWN:
+            case Interaction.MouseDown:
                 surfaceSelector.SurfaceMouseDown(surface);
                 break;
-            case Interaction.MOUSE_ENTER:
+            case Interaction.MouseEnter:
                 surfaceSelector.Enter(surface);
                 break;
-            case Interaction.MOUSE_EXIT:
+            case Interaction.MouseExit:
                 surfaceSelector.Exit(surface);
                 break;
         }

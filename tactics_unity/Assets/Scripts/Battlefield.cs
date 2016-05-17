@@ -52,6 +52,7 @@ public class Battlefield : MonoBehaviour {
             surfaces[x, y] = new ArrayList();
 
         var surface = Instantiate(baseSurface, transform.position + new Vector3(x - width/2, height, y-width/2 ), transform.rotation) as Surface;
+
         surface.transform.SetParent(transform);
         surfaces[x, y].Add(surface);
 

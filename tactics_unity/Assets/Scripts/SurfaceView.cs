@@ -8,34 +8,34 @@ public class SurfaceView : MonoBehaviour {
     public State state;
     public enum State
     {
-        SELECTED,
-        HIGLIGHTED,
-        HIDDEN
+        Selected,
+        Highlighted,
+        Hidden
     }
     public void Start()
     {
-        hide();
+        Hide();
     }
 
-    public void select()
+    public void Select()
     {
-        state = State.SELECTED;
+        state = State.Selected;
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material = mselect;
         meshRenderer.enabled = true;
     }
 
-    public void hilight()
+    public void Highlight()
     {
-        state = State.HIGLIGHTED;
+        state = State.Highlighted;
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material = mhilight;
         meshRenderer.enabled = true;
     }
 
-    public void hide()
+    public void Hide()
     {
-        state = State.HIDDEN;
+        state = State.Hidden;
         var meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
     }

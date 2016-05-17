@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 
 public class BattlefieldController : MonoBehaviour {
-    public Battlefield battlefield;
+    public Battlefield Battlefield;
 
-    Stack<BattlefieldState> stack = new Stack<BattlefieldState>();
+    Stack<BattlefieldState> m_battlefieldStates = new Stack<BattlefieldState>();
 
 	// Use this for initialization
 	void Start () {
@@ -16,19 +16,19 @@ public class BattlefieldController : MonoBehaviour {
     internal void PopState()
     {
         State.OnExit();
-        stack.Pop();
+        m_battlefieldStates.Pop();
         State.OnEnter();
     }
     public void PushState<T>() where T : BattlefieldState
     {
-        var state = (T)Activator.CreateInstance(typeof(T), battlefield, this);
+        var state = (T)Activator.CreateInstance(typeof(T), Battlefield, this);
 
         if (State != null)
         {
             State.OnExit();
         }
 
-        stack.Push(state);
+        m_battlefieldStates.Push(state);
         State.OnEnter();
     }
     
@@ -36,7 +36,7 @@ public class BattlefieldController : MonoBehaviour {
     {
         get
         {
-            return stack.Count > 0 ? stack.Peek() : null;
+            return m_battlefieldStates.Count > 0 ? m_battlefieldStates.Peek() : null;
         }        
     }
 
@@ -45,17 +45,17 @@ public class BattlefieldController : MonoBehaviour {
         State.OnUpdate();
 	}
 
-    public void ButtonPress(String name){ State.Interact(Interaction.MOUSE_CLICK, name, transform); }
+    public void ButtonPress(String name){ State.Interact(Interaction.MouseClick, name, transform); }
     public void Interact(Interaction interaction, Surface transform) { State.Interact(interaction, transform); }
     public void Interact(Interaction interaction, Unit transform) { State.Interact(interaction, transform); }
 }
 
 public enum Interaction
 {
-    MOUSE_ENTER,
-    MOUSE_EXIT,
-    MOUSE_DOWN,
-    MOUSE_UP,
-    MOUSE_OVER,
-    MOUSE_CLICK
+    MouseEnter,
+    MouseExit,
+    MouseDown,
+    MouseUp,
+    MouseOver,
+    MouseClick
 }

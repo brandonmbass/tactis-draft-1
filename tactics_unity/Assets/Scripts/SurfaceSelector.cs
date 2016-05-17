@@ -6,24 +6,24 @@ public class SurfaceSelector {
     public void SurfaceMouseDown(Surface surface)
     {
         if (selectedSurface != null)
-            selectedSurface.GetComponent<SurfaceView>().hide();
+            selectedSurface.GetComponent<SurfaceView>().Hide();
 
         selectedSurface = surface;
-        selectedSurface.GetComponent<SurfaceView>().select();
+        selectedSurface.GetComponent<SurfaceView>().Select();
     }
 
     public void Enter(Surface surface)
     {
         var view = surface.GetComponent<SurfaceView>();
-        if (view.state != SurfaceView.State.SELECTED)
-            view.hilight();
+        if (view.state != SurfaceView.State.Selected)
+            view.Highlight();
     }
 
     public void Exit(Surface surface)
     {
         var view = surface.GetComponent<SurfaceView>();
-        if (view.state != SurfaceView.State.SELECTED)
-            view.hide();
+        if (view.state != SurfaceView.State.Selected)
+            view.Hide();
     }
 
     public void clear()
@@ -34,7 +34,7 @@ public class SurfaceSelector {
         }
 
         var view = selectedSurface.GetComponent<SurfaceView>();
-        view.hide();
+        view.Hide();
         selectedSurface = null;
     }
 }

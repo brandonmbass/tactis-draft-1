@@ -3,21 +3,41 @@ using System.Collections;
 
 public class BattlefieldInput : MonoBehaviour {
     BattlefieldController battlefieldController;
+    Surface surface;
 
     void Start()
     {
         battlefieldController = FindObjectOfType<BattlefieldController>();
+        surface = gameObject.GetComponent<Surface>();
     }
     
-    void OnMouseEnter() { battlefieldController.State.MouseEnter(transform); }
+    void OnMouseEnter()
+    {
+        battlefieldController.Interact(Interaction.MouseEnter, surface);
+    }
 
-    void OnMouseExit() { battlefieldController.State.MouseExit(transform); }
+    void OnMouseExit()
+    {
+        battlefieldController.Interact(Interaction.MouseExit, surface);
+    }
 
-    void OnMouseDown() { battlefieldController.State.MouseDown(transform); }
+    void OnMouseDown()
+    {
+        battlefieldController.Interact(Interaction.MouseDown, surface);
+    }
 
-    void OnMouseUp() { battlefieldController.State.MouseUp(transform); }
+    void OnMouseUp()
+    {
+        battlefieldController.Interact(Interaction.MouseUp, surface);
+    }
 
-    void OnMouseOver() { battlefieldController.State.MouseOver(transform); }
+    void OnMouseOver()
+    {
+        battlefieldController.Interact(Interaction.MouseOver, surface);
+    }
 
-    void OnMouseClick() { battlefieldController.State.MouseClick(transform); }
+    void OnMouseClick()
+    {
+        battlefieldController.Interact(Interaction.MouseClick, surface);
+    }
 }
