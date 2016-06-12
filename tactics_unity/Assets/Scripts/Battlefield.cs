@@ -10,6 +10,8 @@ public class Battlefield : MonoBehaviour {
     public Surface baseSurface;
     public Unit baseUnit;
 
+    public Material mat;
+
     ArrayList[,] surfaces;
     // Use this for initialization
     void Start () {
@@ -94,5 +96,7 @@ public class Battlefield : MonoBehaviour {
         cube.transform.SetParent(transform);
         cube.transform.localPosition = new Vector3(x - width / 2, height / 2 - 0.01f, y - width / 2);
         cube.transform.localScale = new Vector3(1, height, 1);
+
+        cube.GetComponent<MeshRenderer>().material = mat;
     }
 }
