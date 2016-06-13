@@ -9,7 +9,7 @@ public class Surface : MonoBehaviour {
 
     public void Start()
     {
-        transform.rotation = Quaternion.AngleAxis(90f, new Vector3(1, 0, 0));
+        
     }
 
     public void addNeighbor(Surface newNeighbor)

@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System;
 
 public class Battlefield : MonoBehaviour {
-    public int width, depth;
-    public float frequency;
-    public float scale;
+    private int width, depth;
+    
     public Surface baseSurface;
     public Unit baseUnit;
 
@@ -15,21 +14,16 @@ public class Battlefield : MonoBehaviour {
     ArrayList[,] surfaces;
     // Use this for initialization
     void Start () {
-        InitRandomly();
     }
 
-    public void InitRandomly()
+    public void init(int width,int depth, Surface baseSurface, Material tileMaterial)
     {
+        this.width = width;
+        this.depth = depth;
+        this.baseSurface = baseSurface;
+        this.mat = tileMaterial;
+
         surfaces = new ArrayList[width, depth];
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < width; y++)
-            {
-                float height = scale * Mathf.PerlinNoise(x / frequency, y / frequency);
-                createSurface(x, y, height);
-                createBox(x, y, height);
-            }
-        }
     }
 
     public List<Surface> shortestPath(Surface start, Surface goal)
@@ -53,8 +47,8 @@ public class Battlefield : MonoBehaviour {
         if (surfaces[x, y] == null)
             surfaces[x, y] = new ArrayList();
 
-        var surface = Instantiate(baseSurface, transform.position + new Vector3(x - width/2, height, y-width/2 ), transform.rotation) as Surface;
-
+        var surface = Instantiate(baseSurface, transform.position + new Vector3(x - width/2, height, y-depth/2 ), transform.rotation ) as Surface;
+        surface.transform.localRotation = (Quaternion.AngleAxis(90f, new Vector3(1, 0, 0)));
         surface.transform.SetParent(transform);
         surfaces[x, y].Add(surface);
 
@@ -94,9 +88,10 @@ public class Battlefield : MonoBehaviour {
     {
         var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.SetParent(transform);
-        cube.transform.localPosition = new Vector3(x - width / 2, height / 2 - 0.01f, y - width / 2);
+        cube.transform.localPosition = new Vector3(x - width / 2, height / 2 - 0.01f, y - depth / 2);
         cube.transform.localScale = new Vector3(1, height, 1);
 
-        cube.GetComponent<MeshRenderer>().material = mat;
+        if(mat != null)
+            cube.GetComponent<MeshRenderer>().material = mat;
     }
 }
