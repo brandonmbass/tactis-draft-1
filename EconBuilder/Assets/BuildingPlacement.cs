@@ -39,11 +39,10 @@ public class BuildingPlacement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         RaycastHit hitInfo;
-        var validLocation = TerrainManager.GetGroundHitLocation(out hitInfo);
-        gameObject.transform.position = hitInfo.point;
-
-        if (validLocation)
+        var validLocation = false;
+        if(TerrainManager.GetGroundHitLocation(out hitInfo))
         {
+            gameObject.transform.position = hitInfo.point;
             validLocation = IsValidLocation();
         }
 
