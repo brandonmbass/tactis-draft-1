@@ -6,7 +6,7 @@ public class BuildingManager : MonoBehaviour {
 
     public GameObject SelectedBuilding;
 
-    bool isPlacing = false;
+    public bool isPlacing = false;
     GameObject m_Building;
 
     // Use this for initialization
