@@ -19,20 +19,19 @@ public class CharacterUserInput : MonoBehaviour
 
     private void Update()
     {
+        // read inputs
+        float h = CrossPlatformInputManager.GetAxis("Horizontal");
+        float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+        // calculate move direction to pass to character
+        m_Move = v * Vector3.forward + h * Vector3.right;
     }
 
 
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
-        // read inputs
-        float h = Mathf.Ceil(CrossPlatformInputManager.GetAxis("Horizontal"));
-        float v = Mathf.Ceil(CrossPlatformInputManager.GetAxis("Vertical"));                
-
-        // calculate move direction to pass to character
-        var move = v * Vector3.forward + h * Vector3.right;
-
         // pass all parameters to the character control script
-        m_Character.Move(move);
+        m_Character.Move(m_Move);
     }
 }

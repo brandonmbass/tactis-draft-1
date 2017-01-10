@@ -68,7 +68,7 @@ public class Character : MonoBehaviour
     {
         if (move.magnitude == 0)
         {
-            m_Animator.SetFloat("Forward", 0, 0.1f, Time.deltaTime);
+            m_Animator.SetFloat("Forward", 0, 0f, Time.deltaTime);
             return;
         }
 
