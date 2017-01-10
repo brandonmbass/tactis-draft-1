@@ -4,21 +4,35 @@ using System.Collections;
 public class UserActionManager : MonoBehaviour {
     public GameObject character;
     public int chopRadius = 10;
+    public float globalCooldown = 1.0f;
+    private float globalLastActionTime;
 
     ResourceManager resourceManager;
     UIManager uiManager;
+    
 
     void Start () {
         resourceManager = GetComponent<ResourceManager>();
         uiManager = GetComponent<UIManager>();
-	}
+        globalLastActionTime = Time.time;
+    }
 	
 	void Update () {
-	
 	}
+
+    void FixedUpdate()
+    {
+        
+    }
     
+    //TODO make this depend on tools? better worse tools, radius, chopping amount?
     public void Chop()
     {
+        if (IsGlobalOnCooldown())
+        {
+            return;
+        }
+
         var nearestObject = GetNearest(chopRadius);
         if (nearestObject == null)
         {
@@ -29,9 +43,11 @@ public class UserActionManager : MonoBehaviour {
         // Artificially 'Click' the appropriate action key
         uiManager.Click();
 
+
         var choppable = nearestObject.GetComponent<Choppable>();
         choppable.Life--;
         Debug.Log("Chop.");
+        notifyGlobalAction();
 
         if (choppable.Life <= 0)
         {
@@ -41,7 +57,17 @@ public class UserActionManager : MonoBehaviour {
         }
     }
 
+    public bool IsGlobalOnCooldown()
+    {
+        return (Time.time - globalLastActionTime) <= globalCooldown;
+    }
+
+    public void notifyGlobalAction()
+    {
+        globalLastActionTime = Time.time;
+    }
     // TODO: move to character singleton or something like that
+    // TODO: better targetting, perhaps facing?
     public GameObject GetNearest(int radius)
     {
         var colliders = Physics.OverlapSphere(character.transform.position, radius);
