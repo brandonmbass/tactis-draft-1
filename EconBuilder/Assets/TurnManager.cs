@@ -7,7 +7,7 @@ public class TurnManager : GlobalBehavior
     float currentTime = 0.0f;
 
 	void Start() {
-        base.Start();
+        Init();
     }
 	
 	void Update() {
@@ -16,7 +16,7 @@ public class TurnManager : GlobalBehavior
         {
             NewTurn();
         }
-        uiManager.SetSundial(currentTime/turnDuration);
+        UIManager.SetSundial(currentTime/turnDuration);
     }
 
     void NewTurn()

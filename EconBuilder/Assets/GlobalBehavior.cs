@@ -3,15 +3,21 @@ using System.Collections;
 
 public class GlobalBehavior : MonoBehaviour {
 
-    protected BuildingManager buildingManager;
-    protected UIManager uiManager;
-    protected UserActionManager userActionManager;
-    protected ResourceManager resourceManager;
+    protected BuildingManager BuildingManager;
+    protected UIManager UIManager;
+    protected UserActionManager UserActionManager;
+    protected ResourceManager ResourceManager;
+    protected ChatManager ChatManager;
+    protected InputManager InputManager;
+    protected Character Character;
 
-    protected void Start () {
-        buildingManager = GetComponent<BuildingManager>();
-        uiManager = GetComponent<UIManager>();
-        userActionManager = GetComponent<UserActionManager>();
-        resourceManager = GetComponent<ResourceManager>();
+    protected void Init () {
+        BuildingManager = GetComponent<BuildingManager>();
+        UIManager = GetComponent<UIManager>();
+        UserActionManager = GetComponent<UserActionManager>();
+        ResourceManager = GetComponent<ResourceManager>();
+        ChatManager = GetComponent<ChatManager>();
+        InputManager = GetComponent<InputManager>();
+        Character = GameObject.Find("Character").GetComponent<Character>();
     }	
 }

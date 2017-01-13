@@ -3,20 +3,23 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : GlobalBehavior {
 
     public GameObject settingsDialog;
     public GameObject ui;
-    GameObject sundial;
-    GameObject sun;
-
-    BuildingManager BuildingManager;
+    public GameObject Sundial;
+    public GameObject Sun;
+    public GameObject ChatLog;
+    public GameObject ChatEntry;
 
     // Use this for initialization
     void Start () {
-        BuildingManager = GetComponent<BuildingManager>();
-        sundial = ui.transform.Find("Sundial").gameObject;
-        sun = sundial.transform.Find("Sun").gameObject;
+        Init();
+
+        Sundial = ui.transform.Find("Sundial").gameObject;
+        Sun = Sundial.transform.Find("Sun").gameObject;
+        ChatLog = ui.transform.Find("ChatBox/Chat Log").gameObject;
+        ChatEntry = ui.transform.Find("ChatBox/Chat Entry").gameObject;
     }
 	
 	// Update is called once per frame
@@ -41,6 +44,6 @@ public class UIManager : MonoBehaviour {
     // Position should be 0-1.0f
     public void SetSundial(float position)
     {
-        sun.transform.rotation = Quaternion.Euler(0, 0, -135 * position);
+        Sun.transform.rotation = Quaternion.Euler(0, 0, -135 * position);
     }
 }

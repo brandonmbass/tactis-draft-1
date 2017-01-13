@@ -9,11 +9,11 @@ public enum ResourceType
     Gold,
 }
 
-public class ResourceManager : MonoBehaviour {
+public class ResourceManager : GlobalBehavior {
 
 	// Use this for initialization
 	void Start () {
-	
+        Init();
 	}
 	
 	// Update is called once per frame

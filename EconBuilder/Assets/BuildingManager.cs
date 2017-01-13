@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class BuildingManager : MonoBehaviour {
+public class BuildingManager : GlobalBehavior {
 
     public GameObject SelectedBuilding;
 
@@ -11,7 +11,7 @@ public class BuildingManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+        Init();
     }
 	
 	// Update is called once per frame

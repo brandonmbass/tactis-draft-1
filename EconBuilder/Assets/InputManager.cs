@@ -1,38 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
-public class InputManager : MonoBehaviour {
+public class InputManager : GlobalBehavior {
+    Vector3 MoveVector;
 
-    BuildingManager buildingManager;
-    UIManager uiManager;
-    UserActionManager userActionManager;
-    ResourceManager resourceManager;
-
-    // Use this for initialization
     void Start () {
-        buildingManager = GetComponent<BuildingManager>();
-        uiManager = GetComponent<UIManager>();
-        userActionManager = GetComponent<UserActionManager>();
-        resourceManager = GetComponent<ResourceManager>();
+        Init();
     }
 	
-	// Update is called once per frame
 	void Update () {
-        if (buildingManager.isPlacing)
+        HandleKeyPress();
+    }
+
+    void FixedUpdate()
+    {
+        HandleCharacterMovementFixed();
+    }
+
+    void HandleKeyPress()
+    {
+        if (ChatManager.IsActive)
         {
-            // Input handled by BuildingManager
             return;
         }
 
+        if (BuildingManager.isPlacing)
+        {
+            // Input handled by BuildingManager
+            // TODO: pass to BuildingManager here, rather than relying on BuildingManager to use GetKeyDown
+            return;
+        }        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            uiManager.ToggleSettingsDialog();
+            UIManager.ToggleSettingsDialog();
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             // Use Q action
-            userActionManager.Chop();
+            UserActionManager.Chop();
         }
 
+        HandleCharacterMovement();
+    }
+
+    void HandleCharacterMovement()
+    {
+        float h = CrossPlatformInputManager.GetAxis("Horizontal");
+        float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+        // calculate move direction to pass to character
+        MoveVector = v * Vector3.forward + h * Vector3.right;
+    }
+
+    void HandleCharacterMovementFixed()
+    {
+        Character.Move(MoveVector);
     }
 }
