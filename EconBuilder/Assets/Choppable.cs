@@ -10,7 +10,7 @@ public class Choppable : MonoBehaviour {
     public int GetChopped(int power)
     {
         var killable = GetComponent<Killable>();
-        if (!killable.IsDead())
+        if (killable.IsDead())
         {
             return 0;
         }
