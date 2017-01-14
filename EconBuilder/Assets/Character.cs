@@ -8,8 +8,6 @@ public class Character : MonoBehaviour
 {
     [SerializeField]
     float m_MoveSpeedMultiplier = 1f;
-    [SerializeField]
-    GameObject m_Model;
 
     Rigidbody m_Rigidbody;
     Animator m_Animator;    

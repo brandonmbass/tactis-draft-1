@@ -4,6 +4,7 @@ using System.Collections;
 public class UserActionManager : MonoBehaviour {
     public GameObject character;
     public int chopRadius = 10;
+    public int interactRadius = 10;
     public float globalCooldown = 1.0f;
     private float globalLastActionTime;
 
@@ -33,7 +34,7 @@ public class UserActionManager : MonoBehaviour {
             return;
         }
 
-        var nearestObject = GetNearest(chopRadius);
+        var nearestObject = GetNearest<Choppable>(chopRadius);
         if (nearestObject == null)
         {
             Debug.Log("Nothing to chop!");
@@ -57,6 +58,26 @@ public class UserActionManager : MonoBehaviour {
         }
     }
 
+    public void Interact()
+    {
+        if (IsGlobalOnCooldown())
+        {
+            return;
+        }
+
+        var nearestObject = GetNearest<Interactable>(interactRadius);
+        if (nearestObject == null)
+        {
+            Debug.Log("Nothing to interact!");
+            return;
+        }
+
+        var interactable = nearestObject.GetComponent<Interactable>();
+        Debug.Log("Interact.");
+        interactable.Interact();
+        notifyGlobalAction();
+    }
+
     public bool IsGlobalOnCooldown()
     {
         return (Time.time - globalLastActionTime) <= globalCooldown;
@@ -68,7 +89,7 @@ public class UserActionManager : MonoBehaviour {
     }
     // TODO: move to character singleton or something like that
     // TODO: better targetting, perhaps facing?
-    public GameObject GetNearest(int radius)
+    public GameObject GetNearest<T>(int radius)
     {
         var colliders = Physics.OverlapSphere(character.transform.position, radius);
 
@@ -76,7 +97,7 @@ public class UserActionManager : MonoBehaviour {
         GameObject nearestObject = null;
         foreach (var collider in colliders)
         {
-            var choppable = collider.gameObject.GetComponent<Choppable>();
+            var choppable = collider.gameObject.GetComponent<T>();
             if (choppable == null)
             {
                 continue;

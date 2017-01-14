@@ -41,6 +41,11 @@ public class InputManager : GlobalBehavior {
             // Use Q action
             UserActionManager.Chop();
         }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            // Use E action (interact)
+            UserActionManager.Interact();
+        }
 
         HandleCharacterMovement();
     }
