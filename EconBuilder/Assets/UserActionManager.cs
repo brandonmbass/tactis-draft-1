@@ -1,49 +1,53 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UserActionManager : MonoBehaviour {
-    public GameObject character;
-    public int chopRadius = 10;
-    public int interactRadius = 10;
-    public float globalCooldown = 1.0f;
-    private float globalLastActionTime;
+    public int _chopRadius = 10;
+    public int _interactRadius = 10;
+    public GameObject _character;
+    public int _chopRadius = 10;
+    public float _globalCooldown = 1.0f;
+    private float _globalLastActionTime;
 
     ResourceManager resourceManager;
     UIManager uiManager;
     
 
-    void Start () {
+    void Start() {
         resourceManager = GetComponent<ResourceManager>();
         uiManager = GetComponent<UIManager>();
-        globalLastActionTime = Time.time;
+        _globalLastActionTime = Time.time;
     }
 	
-	void Update () {
+	void Update()
+    {
+
 	}
 
     void FixedUpdate()
     {
         
     }
-    
-    //TODO make this depend on tools? better worse tools, radius, chopping amount?
-    public void Chop()
+
+    public void Execute(iAction action)
     {
         if (IsGlobalOnCooldown())
         {
             return;
         }
-
-        var nearestObject = GetNearest<Choppable>(chopRadius);
-        if (nearestObject == null)
+        
+        if(action.GetValidTarget())
         {
-            Debug.Log("Nothing to chop!");
-            return;
+            action.Execute();
         }
-
+    }
+    
+    //TODO make this depend on tools? better worse tools, radius, chopping amount?
+    public void Chop()
+    {
         // Artificially 'Click' the appropriate action key
         uiManager.Click();
-
 
         var choppable = nearestObject.GetComponent<Choppable>();
         choppable.Life--;
@@ -80,38 +84,12 @@ public class UserActionManager : MonoBehaviour {
 
     public bool IsGlobalOnCooldown()
     {
-        return (Time.time - globalLastActionTime) <= globalCooldown;
+        return (Time.time - _globalLastActionTime) <= _globalCooldown;
     }
 
     public void notifyGlobalAction()
     {
-        globalLastActionTime = Time.time;
+        _globalLastActionTime = Time.time;
     }
     // TODO: move to character singleton or something like that
-    // TODO: better targetting, perhaps facing?
-    public GameObject GetNearest<T>(int radius)
-    {
-        var colliders = Physics.OverlapSphere(character.transform.position, radius);
-
-        float minDist = Mathf.Infinity;
-        GameObject nearestObject = null;
-        foreach (var collider in colliders)
-        {
-            var choppable = collider.gameObject.GetComponent<T>();
-            if (choppable == null)
-            {
-                continue;
-            }
-
-            var closestPoint = collider.ClosestPointOnBounds(character.transform.position);
-            var dist = Vector3.Distance(closestPoint, character.transform.position);
-            if (dist < minDist)
-            {
-                nearestObject = collider.gameObject;
-                minDist = dist;
-            }
-        }
-
-        return nearestObject;
-    }
 }

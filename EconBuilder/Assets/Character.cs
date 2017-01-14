@@ -34,31 +34,7 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        // Find closest interactable 
-        var colliders = Physics.OverlapSphere(transform.position, m_InteractRadius);
-
-        float minDist = Mathf.Infinity;
-        GameObject nearestObject = null;
-        foreach (var collider in colliders)
-        {
-            if (collider.gameObject.name != "Blacksmith")
-            {
-                continue;
-            }
-
-            var closestPoint = collider.ClosestPointOnBounds(transform.position);
-            var dist = Vector3.Distance(closestPoint, transform.position);
-            if (dist < minDist)
-            {
-                nearestObject = collider.gameObject;
-                minDist = dist;
-            }
-        }
-
-        if (nearestObject != null)
-        {
-            //Debug.Log("Near: " + nearestObject.name);
-        }
+        
     }
 
 
