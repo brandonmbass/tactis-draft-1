@@ -5,4 +5,5 @@ using System.Collections.Generic;
 public interface iAction {
     void Execute();
     bool HasValidTarget();
+    System.Type targetType();
 }

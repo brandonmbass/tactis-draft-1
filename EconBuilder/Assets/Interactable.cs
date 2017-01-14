@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Interactable : MonoBehaviour {
 
@@ -15,6 +16,6 @@ public class Interactable : MonoBehaviour {
 
     public virtual void Interact()
     {
-
+        Debug.Log("interact!");
     }
 }

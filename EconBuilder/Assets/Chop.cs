@@ -4,53 +4,47 @@ using System;
 using System.Collections.Generic;
 
 public class Chop : iAction {
-    public float _arc;
-    public float _range;
+    public TargettingArc _targetter;
+    public int _power;
     public GameObject _actor;
+
+    public Chop(GameObject actor, int power, TargettingArc targetter)
+    {
+        _targetter = targetter;
+        _power = power;
+        _actor = actor;
+    }
+    public Type targetType()
+    {
+        return typeof(Choppable);
+    }
 
     public void Execute()
     {
-        var targets = GetTargets(_arc, _range);
-        foreach (var target in targets)
+        var target = Targetter.GetClosest( _actor.transform.position, GetTargets());
+        if(target != null)
         {
-            Vector3.Distance(_actor.transform.position, target.transform.position);
+            var resourceAmount = target.GetComponent<Choppable>().GetChopped(_power);
+            if(resourceAmount > 0)
+            {
+                Debug.Log("Collected " + resourceAmount + "inches of wood.");
+            }
         }
     }
-
-    public bool GetValidTarget()
+    private IEnumerable<GameObject> GetTargets()
     {
-        foreach(var target in targets)
+        var position = _actor.transform.position;
+        var forward = _actor.transform.forward;
+        var type = targetType();
+       return _targetter.GetTargets(position, forward, type);
+    }
+
+    public bool HasValidTarget()
+    {
+        foreach(var target in GetTargets())
         {
-            if(target.GetComponent<Choppable>() != null)
-            {
-                return true;
-            }
+            return true;
         }
         return false;
-    }
-
-    public IEnumerable<GameObject> GetTargets(float arc, float range)
-    {
-        List<GameObject> targets = new List<GameObject>();
-        var colliders = Physics.OverlapSphere(_actor.transform.position, range);
-
-        foreach (var collider in colliders)
-        {
-            var targetPosition = collider.transform.position;
-            var position = _actor.transform.position;
-
-            var targetDirection = targetPosition - position;
-            targetDirection.y = 0;
-            var facing2d = _actor.transform.forward;
-            facing2d.y = 0;
-
-            float angle = Vector3.Angle(targetDirection, facing2d);
-            if (angle < arc)
-            {
-                targets.Add(collider.gameObject);
-            }
-        }
-
-        return targets;
     }
 }

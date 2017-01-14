@@ -3,13 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class UserActionManager : MonoBehaviour {
-    public int _chopRadius = 10;
-    public int _interactRadius = 10;
     public GameObject _character;
-    public int _chopRadius = 10;
     public float _globalCooldown = 1.0f;
     private float _globalLastActionTime;
 
+    public Chop _chop;
+    public Interact _interact;
     ResourceManager resourceManager;
     UIManager uiManager;
     
@@ -18,6 +17,9 @@ public class UserActionManager : MonoBehaviour {
         resourceManager = GetComponent<ResourceManager>();
         uiManager = GetComponent<UIManager>();
         _globalLastActionTime = Time.time;
+
+        _chop = new Chop(_character, 10, new TargettingArc(20f, 10f) );
+        _interact = new Interact(_character, new TargettingArc(20f, 10f) );
     }
 	
 	void Update()
@@ -36,52 +38,37 @@ public class UserActionManager : MonoBehaviour {
         {
             return;
         }
-        
-        if(action.GetValidTarget())
+
+        action.Execute();
+    }
+
+    public void Chop()
+    {
+        if(_chop.HasValidTarget())
         {
-            action.Execute();
+            Execute(_chop);
+            notifyGlobalAction();
+            Debug.Log("chop!");
+        } else {
+            Debug.Log("nothing to chop");
+        }
+    }
+
+    
+    public void Interact()
+    {
+        if (_interact.HasValidTarget())
+        {
+            Execute(_interact);
+            notifyGlobalAction();
+            Debug.Log("interact!");
+        }
+        else
+        {
+            Debug.Log("nothing to chop");
         }
     }
     
-    //TODO make this depend on tools? better worse tools, radius, chopping amount?
-    public void Chop()
-    {
-        // Artificially 'Click' the appropriate action key
-        uiManager.Click();
-
-        var choppable = nearestObject.GetComponent<Choppable>();
-        choppable.Life--;
-        Debug.Log("Chop.");
-        notifyGlobalAction();
-
-        if (choppable.Life <= 0)
-        {
-            nearestObject.SetActive(false);
-            // TODO: change ResourceType to a base class, then have the resources directly in the Choppable interface
-            resourceManager.AddResource(ResourceType.Wood, choppable.Value);
-        }
-    }
-
-    public void Interact()
-    {
-        if (IsGlobalOnCooldown())
-        {
-            return;
-        }
-
-        var nearestObject = GetNearest<Interactable>(interactRadius);
-        if (nearestObject == null)
-        {
-            Debug.Log("Nothing to interact!");
-            return;
-        }
-
-        var interactable = nearestObject.GetComponent<Interactable>();
-        Debug.Log("Interact.");
-        interactable.Interact();
-        notifyGlobalAction();
-    }
-
     public bool IsGlobalOnCooldown()
     {
         return (Time.time - _globalLastActionTime) <= _globalCooldown;
@@ -91,5 +78,4 @@ public class UserActionManager : MonoBehaviour {
     {
         _globalLastActionTime = Time.time;
     }
-    // TODO: move to character singleton or something like that
 }
