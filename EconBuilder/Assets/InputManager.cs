@@ -23,7 +23,7 @@ public class InputManager : GlobalBehavior {
         if (ChatManager.IsActive)
         {
             return;
-        }
+        }        
 
         if (BuildingManager.isPlacing)
         {
@@ -34,7 +34,15 @@ public class InputManager : GlobalBehavior {
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UIManager.ToggleSettingsDialog();
+            if (UIManager.Dialog.activeInHierarchy)
+            {
+                // We have an active dialog - dismiss it
+                UIManager.Dialog.SetActive(false);
+            }
+            else
+            {
+                UIManager.ToggleSettingsDialog();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {

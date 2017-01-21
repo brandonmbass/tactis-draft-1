@@ -65,7 +65,7 @@ public class UserActionManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("nothing to chop");
+            Debug.Log("nothing to interact");
         }
     }
     
