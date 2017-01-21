@@ -11,6 +11,9 @@ public class UIManager : GlobalBehavior {
     public GameObject Sun;
     public GameObject ChatLog;
     public GameObject ChatEntry;
+    public GameObject Dialog;
+    public GameObject DialogImage;
+    public GameObject DialogText;
 
     // Use this for initialization
     void Start () {
@@ -20,6 +23,9 @@ public class UIManager : GlobalBehavior {
         Sun = Sundial.transform.Find("Sun").gameObject;
         ChatLog = ui.transform.Find("ChatBox/Chat Log").gameObject;
         ChatEntry = ui.transform.Find("ChatBox/Chat Entry").gameObject;
+        Dialog = ui.transform.Find("Dialog").gameObject;
+        DialogImage = ui.transform.Find("Dialog/Image").gameObject;
+        DialogText = ui.transform.Find("Dialog/Text").gameObject;
     }
 	
 	// Update is called once per frame
