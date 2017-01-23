@@ -7,7 +7,7 @@ public class Killable : MonoBehaviour {
     public int _damage;
     public bool _isDead;
     public delegate void deathCallback();
-    public deathCallback OnDeath; 
+    //public deathCallback OnDeath; 
 
     public bool IsDead()
     {
@@ -18,7 +18,7 @@ public class Killable : MonoBehaviour {
     {
         _damage = _life;
         _isDead = true;
-        OnDeath();
+        Destroy(gameObject);
     }
 
     //TODO: better way?

@@ -21,6 +21,10 @@ public class Targetter{
                 }
             }
         }
-        return closest.gameObject;
+        if (closest != null)
+        {
+            return closest.gameObject;
+        }
+        return null;
     }
 }

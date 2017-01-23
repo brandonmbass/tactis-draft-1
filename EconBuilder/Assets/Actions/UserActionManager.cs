@@ -12,16 +12,22 @@ public class UserActionManager : MonoBehaviour {
     ResourceManager resourceManager;
     UIManager uiManager;
     
-
     void Start() {
         resourceManager = GetComponent<ResourceManager>();
         uiManager = GetComponent<UIManager>();
         _globalLastActionTime = Time.time;
 
-        _chop = new Chop(_character, 10, new TargettingArc(20f, 10f) );
-        _interact = new Interact(_character, new TargettingArc(20f, 10f) );
+        _chop = new Chop(_character, 1, new TargettingArc(70f, 10f) );
+        _interact = new Interact(_character, new TargettingArc(50f, 10f) );
     }
-	
+	public void Chop()
+    {
+        Execute(_chop);
+    }
+    public void Interact()
+    {
+        Execute(_interact);
+    }
 	void Update()
     {
 
@@ -39,34 +45,18 @@ public class UserActionManager : MonoBehaviour {
             return;
         }
 
-        action.Execute();
-    }
-
-    public void Chop()
-    {
-        if(_chop.HasValidTarget())
+        if (action.HasValidTarget())
         {
-            Execute(_chop);
+            action.Execute();
             notifyGlobalAction();
-            Debug.Log("chop!");
-        } else {
-            Debug.Log("nothing to chop");
-        }
-    }
-
-    
-    public void Interact()
-    {
-        if (_interact.HasValidTarget())
-        {
-            Execute(_interact);
-            notifyGlobalAction();
-            Debug.Log("interact!");
+            Debug.Log(action.GetType().Name + " executed");
         }
         else
         {
-            Debug.Log("nothing to interact");
+            Debug.Log("nothing to " + action.GetType().Name);
         }
+
+        action.Execute();
     }
     
     public bool IsGlobalOnCooldown()
