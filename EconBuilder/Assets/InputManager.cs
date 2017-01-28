@@ -1,61 +1,91 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Events;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class InputManager : GlobalBehavior {
     Vector3 MoveVector;
+    public EconEvent KeyPressed;
 
     void Start () {
         Init();
+        KeyPressed = new EconEvent();
+
+        // TODO: move these to respective managers
+        KeyPressed.AddListener((args) =>
+        {
+            if (args.IsPressed(KeyCode.B))
+            {
+                BuildingManager.StartPlacingHouse();
+            }
+
+            return args.RemoveKeys(KeyCode.B);
+        });
+
+        KeyPressed.AddListener((args) =>
+        {
+            if (args.IsPressed(KeyCode.Q))
+            {
+                UserActionManager.Chop();
+            }
+
+            return args.RemoveKeys(KeyCode.Q);
+        });
+
+        KeyPressed.AddListener((args) =>
+        {
+            if (args.IsPressed(KeyCode.E))
+            {
+                UserActionManager.Interact();
+            }
+
+            return args.RemoveKeys(KeyCode.E);
+        });
+
+        KeyPressed.AddListener((args) =>
+        {
+            if (args.IsPressed(KeyCode.Escape))
+            {
+                if (UIManager.Dialog.activeInHierarchy)
+                {
+                    // We have an active dialog - dismiss it
+                    UIManager.Dialog.SetActive(false);
+                }
+                else
+                {
+                    UIManager.ToggleSettingsDialog();
+                }
+            }
+
+            return args.RemoveKeys(KeyCode.Escape);
+        });
+
+        KeyPressed.AddListener((args) =>
+        {
+            if (ChatManager.IsActive)
+            {
+                return args.ClearKeys();
+            }
+
+            return args;
+        });
     }
 	
 	void Update () {
-        HandleKeyPress();
+        if (Input.anyKeyDown)
+        {
+            KeyPressed.Invoke();
+        }
+
+        HandleCharacterMovement();
     }
 
     void FixedUpdate()
     {
         HandleCharacterMovementFixed();
-    }
-
-    void HandleKeyPress()
-    {
-        if (ChatManager.IsActive)
-        {
-            return;
-        }        
-
-        if (BuildingManager.isPlacing)
-        {
-            // Input handled by BuildingManager
-            // TODO: pass to BuildingManager here, rather than relying on BuildingManager to use GetKeyDown
-            return;
-        }        
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (UIManager.Dialog.activeInHierarchy)
-            {
-                // We have an active dialog - dismiss it
-                UIManager.Dialog.SetActive(false);
-            }
-            else
-            {
-                UIManager.ToggleSettingsDialog();
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            // Use Q action
-            UserActionManager.Chop();
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            // Use E action (interact)
-            UserActionManager.Interact();
-        }
-
-        HandleCharacterMovement();
     }
 
     void HandleCharacterMovement()

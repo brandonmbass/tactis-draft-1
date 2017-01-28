@@ -17,25 +17,6 @@ public class BuildingManager : GlobalBehavior {
 	// Update is called once per frame
 	void Update()
     {
-        //TODO: state machine logic bleh
-        if(isPlacing)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
-            {
-                StopPlacingHouse();
-            }   
-            else if (m_Building != null && Input.GetMouseButtonDown(0) && m_Building.GetComponent<BuildingPlacement>().IsValidLocation())
-            {
-                PlaceHouse();
-            }
-        }
-        else //not placing
-        {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                StartPlacingHouse();
-            }
-        }
 	}    
 
     void PlaceHouse()
@@ -45,7 +26,7 @@ public class BuildingManager : GlobalBehavior {
         isPlacing = false;
     }
     
-    void StartPlacingHouse()
+    public void StartPlacingHouse()
     {        
         RaycastHit hitInfo;
         if(TerrainManager.GetGroundHitLocation(out hitInfo))
@@ -54,6 +35,23 @@ public class BuildingManager : GlobalBehavior {
             m_Building = (GameObject)Instantiate(SelectedBuilding, hitInfo.point, transform.rotation);
             m_Building.GetComponent<BuildingPlacement>().enabled = true;
             isPlacing = true;
+
+            // Prevent input handling when placing
+            InputManager.KeyPressed.AddListener((args) =>
+            {
+                if (args.IsPressed(KeyCode.Escape) || Input.GetMouseButtonDown(1))
+                {
+                    StopPlacingHouse();
+                    return args.RemoveKeys(KeyCode.Escape).RemoveSelf();
+                }
+                else if (m_Building != null && Input.GetMouseButtonDown(0) && m_Building.GetComponent<BuildingPlacement>().IsValidLocation())
+                {
+                    PlaceHouse();
+                    return args.RemoveSelf();
+                }
+
+                return args;
+            });
         }
     }
 

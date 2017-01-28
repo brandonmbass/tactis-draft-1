@@ -4,9 +4,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UIManager : GlobalBehavior {
-
-    public GameObject settingsDialog;
+    
     public GameObject ui;
+    public GameObject settingsDialog;
     public GameObject Sundial;
     public GameObject Sun;
     public GameObject ChatLog;
@@ -19,6 +19,7 @@ public class UIManager : GlobalBehavior {
     void Start () {
         Init();
 
+        settingsDialog = ui.transform.Find("Settings").gameObject;
         Sundial = ui.transform.Find("Sundial").gameObject;
         Sun = Sundial.transform.Find("Sun").gameObject;
         ChatLog = ui.transform.Find("ChatBox/Chat Log").gameObject;
