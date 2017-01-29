@@ -7,7 +7,6 @@ public class TurnManager : GlobalBehavior
     float currentTime = 0.0f;
 
 	void Start() {
-        Init();
     }
 	
 	void Update() {

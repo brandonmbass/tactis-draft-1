@@ -11,7 +11,6 @@ public class InputManager : GlobalBehavior {
     public EconEvent KeyPressed;
 
     void Start () {
-        Init();
         KeyPressed = new EconEvent();
 
         // TODO: move these to respective managers
@@ -49,12 +48,12 @@ public class InputManager : GlobalBehavior {
         {
             if (args.IsPressed(KeyCode.Escape))
             {
-                if (UIManager.Dialog.activeInHierarchy)
-                {
-                    // We have an active dialog - dismiss it
-                    UIManager.Dialog.SetActive(false);
-                }
-                else
+                //if (UIManager.Dialog.activeInHierarchy)
+                //{
+                //    // We have an active dialog - dismiss it
+                //    UIManager.Dialog.SetActive(false);
+                //}
+                //else
                 {
                     UIManager.ToggleSettingsDialog();
                 }

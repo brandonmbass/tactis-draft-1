@@ -11,22 +11,30 @@ public class UIManager : GlobalBehavior {
     public GameObject Sun;
     public GameObject ChatLog;
     public GameObject ChatEntry;
+    public GameObject DialogContainer;
     public GameObject Dialog;
     public GameObject DialogImage;
     public GameObject DialogText;
+    public GameObject DialogAnswer1;
+    public GameObject DialogAnswer1Text;
+    public GameObject DialogAnswer2;
+    public GameObject DialogAnswer2Text;
 
     // Use this for initialization
     void Start () {
-        Init();
-
         settingsDialog = ui.transform.Find("Settings").gameObject;
         Sundial = ui.transform.Find("Sundial").gameObject;
         Sun = Sundial.transform.Find("Sun").gameObject;
         ChatLog = ui.transform.Find("ChatBox/Chat Log").gameObject;
         ChatEntry = ui.transform.Find("ChatBox/Chat Entry").gameObject;
-        Dialog = ui.transform.Find("Dialog").gameObject;
-        DialogImage = ui.transform.Find("Dialog/Image").gameObject;
-        DialogText = ui.transform.Find("Dialog/Text").gameObject;
+        DialogContainer = ui.transform.Find("DialogContainer").gameObject;
+        Dialog = ui.transform.Find("DialogContainer/Dialog").gameObject;
+        DialogImage = ui.transform.Find("DialogContainer/Dialog/Image").gameObject;
+        DialogText = ui.transform.Find("DialogContainer/Dialog/Text").gameObject;
+        DialogAnswer1 = ui.transform.Find("DialogContainer/Answer1").gameObject;
+        DialogAnswer1Text = ui.transform.Find("DialogContainer/Answer1/Text").gameObject;
+        DialogAnswer2 = ui.transform.Find("DialogContainer/Answer2").gameObject;
+        DialogAnswer2Text = ui.transform.Find("DialogContainer/Answer2/Text").gameObject;
     }
 	
 	// Update is called once per frame

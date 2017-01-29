@@ -17,7 +17,6 @@ public class ChatManager : GlobalBehavior {
 
     // Use this for initialization
     void Start () {
-        Init();
         ChatLogText = UIManager.ChatLog.GetComponent<Text>();
         ChatEntryText = UIManager.ChatEntry.GetComponent<InputField>();
     }

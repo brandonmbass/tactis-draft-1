@@ -13,7 +13,6 @@ public class ResourceManager : GlobalBehavior {
 
 	// Use this for initialization
 	void Start () {
-        Init();
 	}
 	
 	// Update is called once per frame

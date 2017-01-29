@@ -9,9 +9,7 @@ public class CharacterBase : Interactable {
 
     public override void Interact()
     {
-        var uiManager = GameObject.Find("_SCRIPTS_").GetComponent<UIManager>();
-        uiManager.Dialog.gameObject.SetActive(true);
-        uiManager.DialogText.GetComponent<Text>().text = "Hello world";
-        uiManager.DialogImage.GetComponent<Image>().sprite = Portrait;
+        var dialogManager = GameObject.Find("_SCRIPTS_").GetComponent<DialogManager>();
+        dialogManager.RunDialog(DialogManager.BrandonIsATool, this);
     }
 }
