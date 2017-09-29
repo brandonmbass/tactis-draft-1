@@ -3,27 +3,32 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class Chop : iAction {
+public class Chop : IAction {
     public TargettingArc _targetter;
-    public int _power;
-    public GameObject _actor;
+    public int _power;    
+    public AudioSource chopAudio;
 
-    public Chop(GameObject actor, int power, TargettingArc targetter)
+    public Chop(int power, TargettingArc targetter)
     {
         _targetter = targetter;
         _power = power;
-        _actor = actor;
+
+        // TODO: store audio clips somewhere globally accessible
+        chopAudio = GameObject.Find("_SCRIPTS_").GetComponent<AudioSource>();
     }
     public Type targetType()
     {
         return typeof(Choppable);
     }
 
-    public void Execute()
+    public void Execute(GameObject _actor)
     {
-        var target = Targetter.GetClosest( _actor.transform.position, GetTargets());
+        var target = Targetter.GetClosest( _actor.transform.position, GetTargets(_actor));
         if(target != null)
         {
+            //AudioSource.PlayClipAtPoint(chopAudio.clip, _actor.transform.position);
+            chopAudio.Play();
+
             var resourceAmount = target.GetComponent<Choppable>().GetChopped(_power);
             if(resourceAmount > 0)
             {
@@ -31,7 +36,7 @@ public class Chop : iAction {
             }
         }
     }
-    private IEnumerable<GameObject> GetTargets()
+    private IEnumerable<GameObject> GetTargets(GameObject _actor)
     {
         var position = _actor.transform.position;
         var forward = _actor.transform.forward;
@@ -39,9 +44,9 @@ public class Chop : iAction {
        return _targetter.GetTargets(position, forward, type);
     }
 
-    public bool HasValidTarget()
+    public bool HasValidTarget(GameObject _actor)
     {
-        foreach(var target in GetTargets())
+        foreach(var target in GetTargets(_actor))
         {
             return true;
         }

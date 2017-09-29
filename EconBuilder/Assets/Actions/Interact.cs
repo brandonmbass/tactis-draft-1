@@ -3,33 +3,33 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class Interact : iAction {
+public class Interact : IAction {
     public TargettingArc _targetter;
-    public GameObject _actor;
-    public Interact( GameObject actor, TargettingArc targetter)
+    public Interact(TargettingArc targetter)
     {
-        _actor = actor;
         _targetter = targetter;
     }
 
-    public void Execute()
+    public void Execute(GameObject _actor)
     {
-        var target = Targetter.GetClosest(_actor.transform.position, GetTargets());
+        var target = Targetter.GetClosest(_actor.transform.position, GetTargets(_actor));
         if (target != null)
         {
             target.GetComponent<Interactable>().Interact();
         }
     }
 
-    private IEnumerable<GameObject> GetTargets()
+    private IEnumerable<GameObject> GetTargets(GameObject _actor)
     {
         return _targetter.GetTargets(_actor.transform.position, _actor.transform.forward, targetType());
     }
 
-    public bool HasValidTarget()
+    public bool HasValidTarget(GameObject _actor)
     {
-        foreach (var target in GetTargets())
+        Debug.Log("Has valid target");
+        foreach (var target in GetTargets(_actor))
         {
+            Debug.Log("Target");
             return true;
         }
         return false;

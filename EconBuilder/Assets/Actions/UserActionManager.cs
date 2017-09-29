@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class UserActionManager : MonoBehaviour {
-    public GameObject _character;
     public float _globalCooldown = 1.0f;
     private float _globalLastActionTime;
 
@@ -11,14 +10,25 @@ public class UserActionManager : MonoBehaviour {
     public Interact _interact;
     ResourceManager resourceManager;
     UIManager uiManager;
-    
+    GameObject _character;
+    GameObject character
+    {
+        get
+        {
+            if (_character == null || !_character.activeSelf)
+                _character = GameObject.Find("Character");
+
+            return _character;
+        }
+    }
+
     void Start() {
         resourceManager = GetComponent<ResourceManager>();
         uiManager = GetComponent<UIManager>();
         _globalLastActionTime = Time.time;
 
-        _chop = new Chop(_character, 1, new TargettingArc(70f, 10f) );
-        _interact = new Interact(_character, new TargettingArc(50f, 10f) );
+        _chop = new Chop(1, new TargettingArc(70f, 10f) );
+        _interact = new Interact(new TargettingArc(50f, 10f) );
     }
 	public void Chop()
     {
@@ -38,16 +48,16 @@ public class UserActionManager : MonoBehaviour {
         
     }
 
-    public void Execute(iAction action)
+    public void Execute(IAction action)
     {
         if (IsGlobalOnCooldown())
         {
             return;
         }
 
-        if (action.HasValidTarget())
+        if (action.HasValidTarget(character))
         {
-            action.Execute();
+            action.Execute(character);
             notifyGlobalAction();
             Debug.Log(action.GetType().Name + " executed");
         }
@@ -55,8 +65,6 @@ public class UserActionManager : MonoBehaviour {
         {
             Debug.Log("nothing to " + action.GetType().Name);
         }
-
-        action.Execute();
     }
     
     public bool IsGlobalOnCooldown()
