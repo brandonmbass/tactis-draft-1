@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Truncon.Collections;
 using UnityEngine;
@@ -43,7 +44,7 @@ public class DialogManager : GlobalBehavior {
         //};
     }
 
-    public void RunDialog(Dialog dialog, CharacterBase character)
+    public void RunDialog(Dialog dialog, CharacterBase character, Action<int> callback)
     {
         // TODO: return a result, somehow (hard because this is async)
         UIManager.DialogContainer.gameObject.SetActive(true);
@@ -57,11 +58,12 @@ public class DialogManager : GlobalBehavior {
             {
                 // Somehow save result result.Result
                 UIManager.DialogContainer.gameObject.SetActive(false);
+                callback(result.Result);
                 return;
             }
 
             // Run sub-dialog
-            RunDialog(result == SelfReference ? dialog : result.ResultDialog, character);
+            RunDialog(result == SelfReference ? dialog : result.ResultDialog, character, callback);
         });
 
         UIManager.DialogAnswer2.GetComponent<Button>().onClick.AddListener(() => {
@@ -70,11 +72,12 @@ public class DialogManager : GlobalBehavior {
             {
                 // Somehow save result result.Result
                 UIManager.DialogContainer.gameObject.SetActive(false);
+                callback(result.Result);
                 return;
             }
 
             // Run sub-dialog
-            RunDialog(result == SelfReference ? dialog : result.ResultDialog, character);
+            RunDialog(result == SelfReference ? dialog : result.ResultDialog, character, callback);
         });
 
     }

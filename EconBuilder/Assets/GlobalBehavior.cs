@@ -12,6 +12,7 @@ public class GlobalBehavior : MonoBehaviour {
     protected InputManager InputManager { get { return Get<InputManager>(); } }
     protected Character Character { get { return GameObject.Find("Character").GetComponent<Character>(); } }
     protected DialogManager DialogManager { get { return Get<DialogManager>(); } }
+    protected StoreManager StoreManager { get { return Get<StoreManager>(); } }
 
     private T Get<T>()
     {
