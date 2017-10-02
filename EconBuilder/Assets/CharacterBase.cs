@@ -9,12 +9,12 @@ public class CharacterBase : Interactable {
 
     public override void Interact()
     {
-        var blacksmithData = GameObject.Find("_SCRIPTS_").GetComponent<BlacksmithData>();
+        var blacksmithData = GameObject.Find("_GLOBAL_DATA_").GetComponent<BlacksmithData>();
 
-        var dialogManager = GameObject.Find("_SCRIPTS_").GetComponent<DialogManager>();
+        var dialogManager = GameObject.Find("_GLOBAL_DATA_").GetComponent<DialogManager>();
         dialogManager.RunDialog(DialogManager.BrandonIsATool, this, (res) =>
         {
-            var storeManager = GameObject.Find("_SCRIPTS_").GetComponent<StoreManager>();
+            var storeManager = GameObject.Find("_GLOBAL_DATA_").GetComponent<StoreManager>();
             storeManager.OpenStore(blacksmithData.Store);
         });
     }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class _SCRIPTS_ : MonoBehaviour {
+public class _GLOBAL_DATA_ : MonoBehaviour {
 
-    static _SCRIPTS_ Instance;
+    static _GLOBAL_DATA_ Instance;
 	// Use this for initialization
 	void Start () {
         if (Instance != null)
