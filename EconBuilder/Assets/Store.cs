@@ -1,11 +1,10 @@
-﻿using Items;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class Store
 {
     public List<ItemStack> Items { get; set; }
 
-    public void AddItem(Item item, int count)
+    public void AddItem(ItemType item, int count)
     {
         Items.Add(new ItemStack(item, count));
     }

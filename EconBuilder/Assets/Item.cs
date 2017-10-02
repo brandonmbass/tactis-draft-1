@@ -1,52 +1,86 @@
-﻿// Represents any item. Can go on the ground, takes up inventory slot, etc
-// Note, this doesn't include resources (gold, wood, etc)
+﻿using System;
 
-namespace Items
+static public class Items
 {
-    abstract public class Item
-    {
-        public Item(int stackCount, string inventoryIcon, int goldValue)
-        {
-            Name = this.GetType().Name;
-            StackCount = stackCount;
-            InventoryIcon = inventoryIcon;
-            GoldValue = goldValue;
-        }
+    static public UsableItemType Lathe = new UsableItemType("Lathe", 1, "TODO", 100);
+    static public UsableItemType Furnace = new UsableItemType("Furnace", 1, "TODO", 200);
+    static public UsableItemType Anvil = new UsableItemType("Anvil", 1, "TODO", 200);
+    static public ItemType Feather = new ItemType("Feather", 200, "TODO", 1);
+    static public ItemType Linen = new ItemType("Linen", 100, "TODO", 1);
+    static public ItemType IronOre = new ItemType("IronOre", 20, "TODO", 1);
+    static public ItemType IronIngot = new ItemType("IronIngot", 50, "TODO", 1);
+    static public ItemType Log = new ItemType("Log", 100, "TODO", 1);
+    static public ItemType WoodPlank = new ItemType("Wood plank", 100, "TODO", 1);
+    static public ItemType ArrowHead = new ItemType("Arrowhead", 100, "TODO", 5);
+    static public ItemType Arrow = new ItemType("Arrow", 100, "TODO", 10);
 
-        public string Name { get; set; }
-        public int StackCount { get; set; }
-        public string InventoryIcon { get; set; }
-        public int GoldValue { get; set; }        
-    }
+    // Bows
+    static public ItemType WoodBow = new Bow("Wooden bow", "TODO", 40);
 
-    abstract public class FishingPole : Item
-    {
-        public FishingPole(string inventoryIcon, int goldValue) : base(1, inventoryIcon, goldValue)
-        {
-        }
-    }
+    // Fishing poles
+    static public ItemType WoodFishingPole = new FishingPole("Wooden fishing pole", "TODO", 10);
+    static public ItemType CopperFishingPole = new FishingPole("Copper fishing pole", "TODO", 50);
 
-    public class WoodenFishingPole : FishingPole
-    {
-        public WoodenFishingPole() : base("TODO", 10) { }
-    }
+    // Melee weapons
+    static public UsableItemType Knife = new UsableItemType("Knife", 10, "TODO", 20);
 
-    public class CopperFishingPole : FishingPole
-    {
-        public CopperFishingPole() : base("TODO", 50) { }
-    }
-
-
-    public class ItemStack
-    {
-        public Item Item { get; set; }
-        public int Count { get; set; }
-
-        public ItemStack(Item item, int count)
-        {
-            Item = item;
-            Count = count;
-        }
-    }
-
+    // etc.
 }
+
+public interface IUsable
+{
+    bool InUse { get; set; }
+}
+
+public class ItemType
+{
+    public ItemType(string name, int stackCount, string inventoryIcon, int goldValue)
+    {
+        Name = name;
+        StackCount = stackCount;
+        InventoryIcon = inventoryIcon;
+        GoldValue = goldValue;
+    }
+
+    public string Name { get; set; }
+    public int StackCount { get; set; }
+    public string InventoryIcon { get; set; }
+    public int GoldValue { get; set; }        
+}
+
+public class UsableItemType : ItemType, IUsable
+{
+    // TODO: maybe every item should be usable?
+    public bool InUse { get; set; }
+
+    public UsableItemType(string name, int stackCount, string inventoryIcon, int goldValue) : base(name, stackCount, inventoryIcon, goldValue)
+    {
+    }
+}
+
+public class FishingPole : ItemType
+{
+    public FishingPole(string name, string inventoryIcon, int goldValue) : base(name, 1, inventoryIcon, goldValue)
+    {
+    }
+}
+
+public class Bow : ItemType
+{
+    public Bow(string name, string inventoryIcon, int goldValue) : base(name, 1, inventoryIcon, goldValue)
+    {
+    }
+}
+
+public class ItemStack
+{
+    public ItemType Item { get; set; }
+    public int Count { get; set; }
+
+    public ItemStack(ItemType item, int count)
+    {
+        Item = item;
+        Count = count;
+    }
+}
+

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
-    Truncon.Collections.OrderedDictionary<System.Type, Items.ItemStack> _contents;
+    Truncon.Collections.OrderedDictionary<System.Type, ItemStack> _contents;
 
-    public void Store(Items.Item item, int count = 1)
+    public void Store(ItemType item, int count = 1)
     {
         var itemType = item.GetType();
         if (_contents.ContainsKey(itemType))
@@ -14,11 +14,11 @@ public class Inventory : MonoBehaviour {
         }
          else
         {
-            _contents.Add(itemType, new Items.ItemStack(item, count));
+            _contents.Add(itemType, new ItemStack(item, count));
         }
     }
 
-    public void Store(Items.ItemStack addedStack)
+    public void Store(ItemStack addedStack)
     {
         var itemType = addedStack.Item.GetType();
         if (_contents.ContainsKey(itemType))
@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour {
         return removed;
     }
 
-    public Items.ItemStack RetrieveAll(System.Type itemType)
+    public ItemStack RetrieveAll(System.Type itemType)
     {
         if (!_contents.ContainsKey(itemType))
         {
@@ -74,7 +74,7 @@ public class Inventory : MonoBehaviour {
         return itemStack;
     }
 
-    public Items.ItemStack Retrieve(System.Type itemType, int quantity)
+    public ItemStack Retrieve(System.Type itemType, int quantity)
     {
         if (!_contents.ContainsKey(itemType))
         {
@@ -84,15 +84,15 @@ public class Inventory : MonoBehaviour {
         var item = _contents[itemType].Item;
         var removed = Remove(itemType, quantity);
 
-        return new Items.ItemStack(item, removed);
+        return new ItemStack(item, removed);
     }
 
-    public Items.ItemStack RetrieveAllAt(int index) {
+    public ItemStack RetrieveAllAt(int index) {
         var key = _contents.GetKey(index);
         return RetrieveAll(key);
     }
 
-    public Items.ItemStack RetrieveAt(int index, int quantity)
+    public ItemStack RetrieveAt(int index, int quantity)
     {
         var key = _contents.GetKey(index);
         return Retrieve(key, quantity);

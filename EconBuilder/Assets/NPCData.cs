@@ -1,5 +1,4 @@
-﻿using Items;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NPCData : MonoBehaviour
 {
