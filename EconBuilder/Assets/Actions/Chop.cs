@@ -14,7 +14,7 @@ public class Chop : IAction {
         _power = power;
 
         // TODO: store audio clips somewhere globally accessible
-        chopAudio = GameObject.Find("_SCRIPTS_").GetComponent<AudioSource>();
+        chopAudio = GameObject.Find("_GLOBAL_DATA_").GetComponent<AudioSource>();
     }
     public Type targetType()
     {

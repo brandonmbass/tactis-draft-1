@@ -22,6 +22,7 @@ public class UIManager : GlobalBehavior {
 
     // Use this for initialization
     void Start () {
+        ui = GameObject.Find("UI Canvas");
         settingsDialog = ui.transform.Find("Settings").gameObject;
         Sundial = ui.transform.Find("Sundial").gameObject;
         Sun = Sundial.transform.Find("Sun").gameObject;
