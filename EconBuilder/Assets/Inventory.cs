@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
-    Truncon.Collections.OrderedDictionary<System.Type, ItemStack> _contents;
+    Truncon.Collections.OrderedDictionary<ItemType, ItemStack> _contents;
 
-    public void Store(ItemType item, int count = 1)
+    public void Store(ItemType itemType, int count = 1)
     {
-        var itemType = item.GetType();
         if (_contents.ContainsKey(itemType))
         {
             _contents[itemType].Count += count;
         }
          else
         {
-            _contents.Add(itemType, new ItemStack(item, count));
+            _contents.Add(itemType, new ItemStack(itemType, count));
         }
     }
 
     public void Store(ItemStack addedStack)
     {
-        var itemType = addedStack.Item.GetType();
+        var itemType = addedStack.Item;
         if (_contents.ContainsKey(itemType))
         {
             var itemStack = _contents[itemType].Count += addedStack.Count; ;
@@ -31,7 +30,7 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public int Count(System.Type itemType)
+    public int Count(ItemType itemType)
     {
         if (_contents.ContainsKey(itemType))
         {
@@ -40,7 +39,7 @@ public class Inventory : MonoBehaviour {
         return 0;
     }
 
-    public int Remove(System.Type itemType, int quantity)
+    public int Remove(ItemType itemType, int quantity)
     {
         if (!_contents.ContainsKey(itemType))
         { 
@@ -62,7 +61,7 @@ public class Inventory : MonoBehaviour {
         return removed;
     }
 
-    public ItemStack RetrieveAll(System.Type itemType)
+    public ItemStack RetrieveAll(ItemType itemType)
     {
         if (!_contents.ContainsKey(itemType))
         {
@@ -74,17 +73,16 @@ public class Inventory : MonoBehaviour {
         return itemStack;
     }
 
-    public ItemStack Retrieve(System.Type itemType, int quantity)
+    public ItemStack Retrieve(ItemType itemType, int quantity)
     {
         if (!_contents.ContainsKey(itemType))
         {
             return null;
         }
 
-        var item = _contents[itemType].Item;
         var removed = Remove(itemType, quantity);
 
-        return new ItemStack(item, removed);
+        return new ItemStack(itemType, removed);
     }
 
     public ItemStack RetrieveAllAt(int index) {
