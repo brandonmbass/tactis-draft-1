@@ -10,7 +10,7 @@ public class GlobalBehavior : MonoBehaviour {
     protected ResourceManager ResourceManager { get { return Get<ResourceManager>(); } }
     protected ChatManager ChatManager { get { return Get<ChatManager>(); } }
     protected InputManager InputManager { get { return Get<InputManager>(); } }
-    protected Character Character { get { return GameObject.Find("Character").GetComponent<Character>(); } }
+    protected Mobile CurrentCharacter { get { return GameObject.Find("CurrentCharacter").GetComponent<Mobile>(); } }
     protected DialogManager DialogManager { get { return Get<DialogManager>(); } }
     protected StoreManager StoreManager { get { return Get<StoreManager>(); } }
 

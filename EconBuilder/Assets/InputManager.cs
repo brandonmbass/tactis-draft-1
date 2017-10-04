@@ -98,6 +98,6 @@ public class InputManager : GlobalBehavior {
 
     void HandleCharacterMovementFixed()
     {
-        Character.Move(MoveVector);
+        CurrentCharacter.Move(MoveVector);
     }
 }
