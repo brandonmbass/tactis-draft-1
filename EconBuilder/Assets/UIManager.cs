@@ -19,6 +19,7 @@ public class UIManager : GlobalBehavior {
     public GameObject DialogAnswer1Text;
     public GameObject DialogAnswer2;
     public GameObject DialogAnswer2Text;
+    public GameObject craftingDialog;
 
     // Use this for initialization
     void Start () {
@@ -36,17 +37,17 @@ public class UIManager : GlobalBehavior {
         DialogAnswer1Text = ui.transform.Find("DialogContainer/Answer1/Text").gameObject;
         DialogAnswer2 = ui.transform.Find("DialogContainer/Answer2").gameObject;
         DialogAnswer2Text = ui.transform.Find("DialogContainer/Answer2/Text").gameObject;
+        craftingDialog = ui.transform.Find("CraftingWindow").gameObject;
     }
 	
-	// Update is called once per frame
-	void Update () {
-	    
-
-	}
-
     public void ToggleSettingsDialog()
     {
         this.settingsDialog.SetActive(!settingsDialog.activeSelf);
+    }
+
+    public void ToggleCraftingDialog()
+    {
+        this.craftingDialog.SetActive(!craftingDialog.activeSelf);
     }
 
     public void Click()
