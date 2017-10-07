@@ -16,7 +16,7 @@ public class UserActionManager : MonoBehaviour {
         get
         {
             if (_character == null || !_character.activeSelf)
-                _character = GameObject.Find("Character");
+                _character = GameObject.Find("CurrentCharacter");
 
             return _character;
         }

@@ -21,10 +21,10 @@ public class ChatManager : GlobalBehavior {
         ChatEntryText = UIManager.ChatEntry.GetComponent<InputField>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void AddText(string text)
+    {
+        ChatEntryText.text += text + "\n";
+    }
 
     public void ProcessKey(char c)
     {

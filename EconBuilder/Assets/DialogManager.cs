@@ -46,6 +46,10 @@ public class DialogManager : GlobalBehavior {
 
     public void RunDialog(Dialog dialog, CharacterBase character, Action<int> callback)
     {
+        // Clean up previous bindings
+        UIManager.DialogAnswer1.GetComponent<Button>().onClick.RemoveAllListeners();
+        UIManager.DialogAnswer2.GetComponent<Button>().onClick.RemoveAllListeners();
+
         // TODO: return a result, somehow (hard because this is async)
         UIManager.DialogContainer.gameObject.SetActive(true);
         UIManager.DialogText.GetComponent<Text>().text = dialog.Text;
@@ -98,6 +102,34 @@ public class DialogManager : GlobalBehavior {
                     }
                 }
             }
+        }
+    };
+
+    public static Dialog LumberjackGreeting = new Dialog
+    {
+        Text = "Ho there! You look like a good strong lad - maybe help me knock down some trees?",
+        Options = {
+            { "Will do! ", DialogResult.Res0 },
+            { "Sounds fun! ", DialogResult.Res0 }
+        }
+    };
+
+    public static Dialog GuardGreeting = new Dialog
+    {
+        Text = "Greetings citizen! Feel at ease in Cityville, as us guards are here to keep you...to keep you...",
+        Options = {
+            { "It seems you need some time to collect yourself - I'll leave you alone.", DialogResult.Res0 },
+            { "...is everything okay?", new DialogResult { ResultDialog = new Dialog
+                {
+                    Text = @"Well...it's kind of shameful to admit, but even though we are here to protect the citizens, we don't have
+                         the equipment to do so! If someone could bring us 10 arrows, we could protect the citizens, and even offer a handsome reward.",
+                    Options =
+                    {
+                        { "Wow, I hope someone (else) brings you those supplies. Now I'm kinda worried.", DialogResult.Res0},
+                        { "Hmm, I know a bit about fletching - I'll see if I cant help!", DialogResult.Res1 }
+                    }
+                }
+            }}
         }
     };
 }

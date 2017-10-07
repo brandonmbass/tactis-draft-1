@@ -20,6 +20,7 @@ public class UIManager : GlobalBehavior {
     public GameObject DialogAnswer2;
     public GameObject DialogAnswer2Text;
     public GameObject craftingDialog;
+    public GameObject questDialog;
 
     // Use this for initialization
     void Start () {
@@ -38,6 +39,7 @@ public class UIManager : GlobalBehavior {
         DialogAnswer2 = ui.transform.Find("DialogContainer/Answer2").gameObject;
         DialogAnswer2Text = ui.transform.Find("DialogContainer/Answer2/Text").gameObject;
         craftingDialog = ui.transform.Find("CraftingWindow").gameObject;
+        questDialog = ui.transform.Find("QuestWindow").gameObject;
     }
 	
     public void ToggleSettingsDialog()
@@ -48,6 +50,34 @@ public class UIManager : GlobalBehavior {
     public void ToggleCraftingDialog()
     {
         this.craftingDialog.SetActive(!craftingDialog.activeSelf);
+    }
+
+    public void ToggleQuestDialog()
+    {
+        var list = questDialog.transform.Find("LeftPanel/QuestList/Viewport/Content");
+        var description = questDialog.transform.Find("RightPanel/QuestText").GetComponent<Text>();
+
+        // TODO: currently this draws copy over copy on top of each other. We could 'delete' everything, but then we lose previous selection
+        // Instead, add 'AddQuest' to QuestManager, have it update the UI when the quest is added rather than regenerating each time. Alternately,
+        // we could add AddQuest onto the characters quest script.
+
+        // Load from current player
+        int offset = 0;
+        foreach (var quest in this.CurrentCharacterQuestData.Quests)
+        {
+            var itemGO = (GameObject)Instantiate(Resources.Load("Prefabs/QuestItem"), list);
+            itemGO.transform.Find("Title").GetComponent<Text>().text = quest.Title;
+            itemGO.transform.Find("Description").GetComponent<Text>().text = quest.ShortDescription;
+            itemGO.transform.localPosition = new Vector3(itemGO.transform.localPosition.x, itemGO.transform.localPosition.y - offset, itemGO.transform.localPosition.z);
+            itemGO.GetComponent<QuestItemSelectable>().SelectEvent.AddListener((args) =>
+            {
+                description.text = quest.LongDescription;
+            });
+
+            offset += 85;
+        }
+
+        this.questDialog.SetActive(!questDialog.activeSelf);
     }
 
     public void Click()
