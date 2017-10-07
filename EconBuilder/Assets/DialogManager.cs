@@ -132,4 +132,22 @@ public class DialogManager : GlobalBehavior {
             }}
         }
     };
+
+    public static Dialog LoserGreeting = new Dialog
+    {
+        Text = "Oh Hello, I'm Ryan. I don't wanna bother you, but I'm told I'm not fun to be around...",
+        Options = {
+            { "Damn you are worse than that guard - I'll leave you alone.", DialogResult.Res0 },
+            { "...is everything okay?", new DialogResult { ResultDialog = new Dialog
+                {
+                    Text = @"Well...it's kind of shameful to admit, but I keep telling jokes non-stop and no one ever laughs, I saw a witch and she told me what I seek is hard to find... if someone could bring me a sense of humor, I think we'd all be better off.",
+                    Options =
+                    {
+                        { "Wow, it's nice to see you haven't given up, but eesh.... I am already having a hard time looking at you, you are on your own bud", DialogResult.Res0},
+                        { "Hmm, I solemnly promise to find one a bring it back for you!", DialogResult.Res1 }
+                    }
+                }
+            }}
+        }
+    };
 }
