@@ -1131,6 +1131,7 @@ GameObject:
   - component: {fileID: 719952611}
   - component: {fileID: 719952613}
   - component: {fileID: 719952612}
+  - component: {fileID: 719952614}
   m_Layer: 5
   m_Name: QuestWindow
   m_TagString: Untagged
@@ -1191,6 +1192,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 719952610}
+--- !u!114 &719952614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 719952610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafaec652152a0142bf8fb844544c60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &732354805
 Prefab:
   m_ObjectHideFlags: 0
