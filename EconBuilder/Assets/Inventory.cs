@@ -109,6 +109,26 @@ public class Inventory : MonoBehaviour {
     {
         other.GiveAll(this);
     }
+
+    public int Count()
+    {
+        return _contents.Count;
+    }
+
+    public IEnumerator<ItemStack> GetEnumerator()
+    {
+        var itr = _contents.GetEnumerator();
+        foreach(var pair in _contents)
+        {
+            yield return pair.Value;
+        }
+    }
+
+    public ItemStack this[int i]
+    {
+        get { return _contents[i];  }
+        set { _contents[i] = value; }
+    }
 	// Use this for initialization
 	void Start () {
 		

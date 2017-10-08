@@ -24,7 +24,7 @@ public class QuestManager : GlobalBehavior {
     {
         InputManager.KeyPressed.AddListener((args) =>
         {
-            if (args.IsPressed(KeyCode.Q))
+            if (args.IsPressed(KeyCode.L))
             {
                 UIManager.ToggleQuestDialog();
             }

@@ -71,6 +71,16 @@ public class InputManager : GlobalBehavior {
 
             return args;
         });
+
+        KeyPressed.AddListener((args) =>
+        {
+            if (args.IsPressed(KeyCode.I))
+            {
+                UIManager.TogglePlayerInventory();
+            }
+
+            return args.RemoveKeys(KeyCode.I);
+        });
     }
 	
 	void Update () {

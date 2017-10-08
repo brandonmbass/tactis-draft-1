@@ -21,6 +21,7 @@ public class UIManager : GlobalBehavior {
     public GameObject DialogAnswer2Text;
     public GameObject craftingDialog;
     public GameObject questDialog;
+    public GameObject playerInventory;
 
     // Use this for initialization
     void Start () {
@@ -40,6 +41,8 @@ public class UIManager : GlobalBehavior {
         DialogAnswer2Text = ui.transform.Find("DialogContainer/Answer2/Text").gameObject;
         craftingDialog = ui.transform.Find("CraftingWindow").gameObject;
         questDialog = ui.transform.Find("QuestWindow").gameObject;
+
+        playerInventory = Resources.Load("Prefabs/InventoryUI") as GameObject;
     }
 	
     public void ToggleSettingsDialog()
@@ -50,6 +53,11 @@ public class UIManager : GlobalBehavior {
     public void ToggleCraftingDialog()
     {
         this.craftingDialog.SetActive(!craftingDialog.activeSelf);
+    }
+
+    public void TogglePlayerInventory()
+    {
+        this.playerInventory.SetActive(!playerInventory.activeSelf);
     }
 
     public void ToggleQuestDialog()
