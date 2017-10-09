@@ -10,7 +10,7 @@ public class CharacterBase : Interactable {
     public override void Interact()
     {
         var managers = GameObject.Find("_GLOBAL_DATA_/Managers");
-        var blacksmithData = GameObject.Find("_GLOBAL_DATA_/CharacterData").GetComponent<BlacksmithData>();
+        var blacksmithData = GameObject.Find("_GLOBAL_DATA_/CharacterData/BlacksmithData").GetComponent<BlacksmithData>();
 
         var dialogManager = managers.GetComponent<DialogManager>();
         dialogManager.RunDialog(DialogManager.BrandonIsATool, this, (res) =>

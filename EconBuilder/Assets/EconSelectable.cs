@@ -4,17 +4,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class QuestItemSelectable : Selectable {
+public class EconSelectable : Selectable {
 
     public EconEvent SelectEvent { get; set; }
+    public EconEvent DeselectEvent { get; set; }
 
-    public QuestItemSelectable()
+    public EconSelectable()
     {
         SelectEvent = new EconEvent();
+        DeselectEvent = new EconEvent();
     }
 
     public override void OnSelect(BaseEventData eventData)
     {
         SelectEvent.Invoke();
+    }
+
+    public override void OnDeselect(BaseEventData eventData)
+    {
+        DeselectEvent.Invoke();
     }
 }

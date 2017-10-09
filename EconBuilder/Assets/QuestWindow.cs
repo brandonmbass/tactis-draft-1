@@ -42,7 +42,7 @@ public class QuestWindow : MonoBehaviour {
         itemGO.transform.Find("Title").GetComponent<Text>().text = quest.Title;
         itemGO.transform.Find("Description").GetComponent<Text>().text = quest.ShortDescription;
         itemGO.transform.localPosition = new Vector3(itemGO.transform.localPosition.x, itemGO.transform.localPosition.y - Quests.Count * 85, itemGO.transform.localPosition.z);
-        itemGO.GetComponent<QuestItemSelectable>().SelectEvent.AddListener((args) =>
+        itemGO.GetComponent<EconSelectable>().SelectEvent.AddListener((args) =>
         {
             questDescription.text = quest.LongDescription;
         });

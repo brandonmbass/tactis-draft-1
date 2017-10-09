@@ -14,6 +14,17 @@ public class StoreManager : GlobalBehavior
         {
             var itemGO = (GameObject)Instantiate(Resources.Load("Prefabs/ShopItem"), itemView);
             itemGO.transform.localPosition = new Vector3(0, offset, 0);
+            var itemSel = itemGO.GetComponent<EconSelectable>();
+            var itemImg = itemGO.GetComponent<Image>();
+            itemSel.SelectEvent.AddListener((args) =>
+            {
+                itemImg.color = new Color(0.8f, 0.2f, 0.2f);
+            });
+
+            itemSel.DeselectEvent.AddListener((args) =>
+            {
+                itemImg.color = new Color(1f, 1f, 1f);
+            });
 
             var itemDescGO = itemGO.transform.Find("ItemDescription");
             var textComponent = itemDescGO.GetComponent<Text>();
