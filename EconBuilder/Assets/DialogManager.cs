@@ -139,30 +139,11 @@ public class DialogManager : GlobalBehavior {
             { "It seems you need some time to collect yourself - I'll leave you alone.", DialogResult.Res0 },
             { "...is everything okay?", new DialogResult { ResultDialog = new Dialog
                 {
-                    Text = @"Well...it's kind of shameful to admit, but even though we are here to protect the citizens, we don't have
-                         the equipment to do so! If someone could bring us 10 arrows, we could protect the citizens, and even offer a handsome reward.",
+                    Text = "Well...it's kind of shameful to admit, but even though we are here to protect the citizens, we don't have the equipment to do so! If someone could bring us 10 arrows, we could protect the citizens, and even offer a handsome reward.",
                     Options =
                     {
                         { "Wow, I hope someone (else) brings you those supplies. Now I'm kinda worried.", DialogResult.Res0},
                         { "Hmm, I know a bit about fletching - I'll see if I cant help!", DialogResult.Res1 }
-                    }
-                }
-            }}
-        }
-    };
-
-    public static Dialog LoserGreeting = new Dialog
-    {
-        Text = "Oh Hello, I'm Ryan. I don't wanna bother you, but I'm told I'm not fun to be around...",
-        Options = {
-            { "Damn you are worse than that guard - I'll leave you alone.", DialogResult.Res0 },
-            { "...is everything okay?", new DialogResult { ResultDialog = new Dialog
-                {
-                    Text = @"Well...it's kind of shameful to admit, but I keep telling jokes non-stop and no one ever laughs, I saw a witch and she told me what I seek is hard to find... if someone could bring me a sense of humor, I think we'd all be better off.",
-                    Options =
-                    {
-                        { "Wow, it's nice to see you haven't given up, but eesh.... I am already having a hard time looking at you, you are on your own bud", DialogResult.Res0},
-                        { "Hmm, I solemnly promise to find one a bring it back for you!", DialogResult.Res1 }
                     }
                 }
             }}

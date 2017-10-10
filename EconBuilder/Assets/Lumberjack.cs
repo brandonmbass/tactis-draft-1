@@ -10,11 +10,9 @@ public class Lumberjack : CharacterBase
 
     public override void Interact()
     {
-        var managers = GameObject.Find("_GLOBAL_DATA_/Managers");
         var lumberjackData = GameObject.Find("_GLOBAL_DATA_/CharacterData/LumberjackData").GetComponent<LumberjackData>();
-
-        var dialogManager = managers.GetComponent<DialogManager>();
-        dialogManager.RunDialog(DialogManager.LumberjackGreeting, this, (res) =>
+        
+        GlobalData.DialogManager.RunDialog(DialogManager.LumberjackGreeting, this, (res) =>
         {
         });
     }
