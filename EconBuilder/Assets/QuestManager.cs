@@ -1,6 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum QuestStatus
+{
+    NotStarted,
+    Started,
+    Abandoned,
+    Failed,
+    Compelted
+}
 
 public class Quest
 {
@@ -10,6 +20,17 @@ public class Quest
     public string Title { get; set; }
     public string ShortDescription { get; set; }
     public string LongDescription { get; set; }
+    public QuestStatus Status { get; set; }
+    public Func<bool> CanComplete { get; set; }
+    public Action Complete { get; set; }
+
+
+    // Dialog support
+    public string ProgressQuestion { get; set; }
+    public string DoneAnswer { get; set; }
+    public string NotDoneAnswer { get; set; }
+
+
 
     public Quest()
     {

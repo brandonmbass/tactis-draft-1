@@ -41,7 +41,7 @@ public class UIManager : GlobalBehavior {
         DialogAnswer2Text = ui.transform.Find("DialogContainer/Answer2/Text").gameObject;
         craftingDialog = ui.transform.Find("CraftingWindow").gameObject;
         questWindow = ui.transform.Find("QuestWindow").GetComponent<QuestWindow>();
-        playerInventory = Resources.Load("Prefabs/InventoryUI") as GameObject;
+        playerInventory = ui.transform.Find("Inventory").gameObject;
     }
 	
     public void ToggleSettingsDialog()

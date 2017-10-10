@@ -23,39 +23,41 @@ public class DialogManager : GlobalBehavior {
     // Lets a dialog reference itself
     private static DialogResult SelfReference = new DialogResult { };
 
-	void Start () {
-        //BrandonIsATool = new Dialog
-        //{
-        //    Text = "I've been a blacksmith all my life, so I know tools. And Brandon is DEFINITELY a tool.",
-        //    Options = {
-        //    { "He sure is! ", DialogResult.Res0 },
-        //    { "I don't think that's right...", new DialogResult { ResultDialog = new Dialog
-        //            {
-        //                Text = "...are you sure? I'm pretty confident he's a tool.",
-        //                Options =
-        //                {
-        //                    { "Yep, definitely not a tool.", SelfReference},
-        //                    { "You are the expert. Brandon is a tool.", null }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        //};
+    public void RunQuestDialog(Quest quest, CharacterBase character, Action<int> callback)
+    {
+        var dialog = new Dialog
+        {
+            Text = quest.ProgressQuestion
+        };
+
+        if (quest.CanComplete())
+        {
+            dialog.Options.Add(quest.DoneAnswer, DialogResult.Res0);
+        }
+        else
+        {
+            dialog.Options.Add(quest.NotDoneAnswer, DialogResult.Res1);
+        }
+
+        RunDialog(dialog, character, (res) =>
+        {
+            if (res == 0)
+            {
+                callback(res);
+            }
+        });
     }
 
     public void RunDialog(Dialog dialog, CharacterBase character, Action<int> callback)
-    {
-        // Clean up previous bindings
-        UIManager.DialogAnswer1.GetComponent<Button>().onClick.RemoveAllListeners();
-        UIManager.DialogAnswer2.GetComponent<Button>().onClick.RemoveAllListeners();
+    {        
+        ResetDialog();        
 
         // TODO: return a result, somehow (hard because this is async)
         UIManager.DialogContainer.gameObject.SetActive(true);
         UIManager.DialogText.GetComponent<Text>().text = dialog.Text;
         UIManager.DialogImage.GetComponent<Image>().sprite = character.Portrait;
         UIManager.DialogAnswer1Text.GetComponent<Text>().text = dialog.Options.GetKey(0);
-        UIManager.DialogAnswer2Text.GetComponent<Text>().text = dialog.Options.GetKey(1);
+        
         UIManager.DialogAnswer1.GetComponent<Button>().onClick.AddListener(() => {
             var result = dialog.Options[0];
             if (result.ResultDialog == null && result != SelfReference)
@@ -70,6 +72,13 @@ public class DialogManager : GlobalBehavior {
             RunDialog(result == SelfReference ? dialog : result.ResultDialog, character, callback);
         });
 
+        if (dialog.Options.Count < 2)
+        {
+            return;
+        }
+
+        UIManager.DialogAnswer2.SetActive(true);
+        UIManager.DialogAnswer2Text.GetComponent<Text>().text = dialog.Options.GetKey(1);
         UIManager.DialogAnswer2.GetComponent<Button>().onClick.AddListener(() => {
             var result = dialog.Options[1];
             if (result.ResultDialog == null && result != SelfReference)
@@ -83,6 +92,15 @@ public class DialogManager : GlobalBehavior {
             // Run sub-dialog
             RunDialog(result == SelfReference ? dialog : result.ResultDialog, character, callback);
         });
+    }
+
+    void ResetDialog()
+    {
+        // Clean up previous bindings
+        UIManager.DialogAnswer1.GetComponent<Button>().onClick.RemoveAllListeners();
+        UIManager.DialogAnswer2.GetComponent<Button>().onClick.RemoveAllListeners();
+
+        UIManager.DialogAnswer2.SetActive(false);
 
     }
 

@@ -17,12 +17,25 @@ public class Guard : CharacterBase
 
         var dialogManager = managers.GetComponent<DialogManager>();
         var chatManager = managers.GetComponent<ChatManager>();
+
+        if (playerQuestData.Quests.Contains(guardData.MakeArrows))
+        {
+            if (guardData.MakeArrows.Status == QuestStatus.Started)
+            {
+                dialogManager.RunQuestDialog(guardData.MakeArrows, this, (res) =>
+                {
+                });
+                return;
+            }
+        }
+
         dialogManager.RunDialog(DialogManager.GuardGreeting, this, (res) =>
         {
             if (res == DialogResult.Res1.Result)
             {
                 // Player accepted the quest
                 playerQuestData.Quests.Add(guardData.MakeArrows);
+                guardData.MakeArrows.Status = QuestStatus.Started;
                 chatManager.AddText("Entry added to log.");
             }
         });
