@@ -9,6 +9,7 @@ public class Recipe
     public ItemType Result { get; set; }
     public List<ItemStack> Materials { get; set; }
     public List<IUsable> Requirements { get; set; }
+    public int ResultCount { get; set; }
     public bool Known { get; set; }
 
     public Recipe(ItemType result)
@@ -29,6 +30,32 @@ public class Recipe
         Requirements.Add(usable);
         return this;
     }
+
+    public bool CanMake()
+    {
+        // TODO: should this be on character?
+        foreach (var material in Materials)
+        {
+            if (!G.CurrentCharacter.Inventory.Has(material.Count, material.Item))
+            {
+                return false;
+            }
+        }
+
+        // TODO: Requires check
+
+        return true;
+    }
+
+    public void Craft()
+    {
+        foreach (var material in Materials)
+        {
+            G.CurrentCharacter.Inventory.Take(material.Count, material.Item);
+        }
+
+        G.CurrentCharacter.Inventory.Add(this.ResultCount, this.Result);
+    }
 }
 
 static public class Recipes
@@ -39,7 +66,7 @@ static public class Recipes
     {
         RecipeList = new List<Recipe>();
 
-        AddRecipe(Items.WoodPlank)
+        AddRecipe(Items.WoodPlank, 5)
             .AddMaterial(Items.Log, 1);
 
         AddRecipe(Items.WoodBow)
@@ -55,19 +82,27 @@ static public class Recipes
             .AddMaterial(Items.IronIngot, 1)
             .Requires(Items.Anvil);
 
-        AddRecipe(Items.Arrow)
-            .AddMaterial(Items.ArrowHead, 1)
-            .AddMaterial(Items.WoodPlank, 1)
-            .AddMaterial(Items.Feather, 2)
-            .Requires(Items.Knife);
+        // TODO: revert
+        AddRecipe(Items.Arrow, 2)
+            //.AddMaterial(Items.ArrowHead, 1)
+            .AddMaterial(Items.WoodPlank, 1);
+            //.AddMaterial(Items.Feather, 2)
+            //.Requires(Items.Knife);
     }
 
-    static private Recipe AddRecipe(ItemType result, bool known = true)
+    static private Recipe AddRecipe(ItemType result, int resultCount = 1, bool known = true)
     {
         var recipe = new Recipe(result);
+        recipe.ResultCount = resultCount;
         recipe.Known = known;
         RecipeList.Add(recipe);
         return recipe;
+    }
+
+    static public Recipe GetRecipe(ItemType itemType)
+    {
+        // TODO: dictionary
+        return RecipeList.Find(r => r.Result == itemType);
     }
 }
  

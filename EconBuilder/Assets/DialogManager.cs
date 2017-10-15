@@ -43,6 +43,7 @@ public class DialogManager : GlobalBehavior {
         {
             if (res == 0)
             {
+                quest.Complete();
                 callback(res);
             }
         });

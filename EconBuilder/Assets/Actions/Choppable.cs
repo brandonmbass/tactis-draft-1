@@ -17,23 +17,8 @@ public class Choppable : MonoBehaviour {
             
         if(killable.Damage(power))
         {
-            return _value;
+            G.CurrentCharacter.Inventory.Add(_value, Items.Log);
         }
         return 0;
     }
-
-    // Use this for initialization
-    void Start () {
-       
-	}
-	
-    void Awake()
-    {
-        //GetComponent<Killable>().OnDeath += Death;
-    }
-
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

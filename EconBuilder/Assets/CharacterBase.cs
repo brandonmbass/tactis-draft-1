@@ -11,9 +11,9 @@ public class CharacterBase : Interactable {
     {
         var blacksmithData = GameObject.Find("_GLOBAL_DATA_/CharacterData/BlacksmithData").GetComponent<BlacksmithData>();
         
-        GlobalData.DialogManager.RunDialog(DialogManager.BrandonIsATool, this, (res) =>
+        G.DialogManager.RunDialog(DialogManager.BrandonIsATool, this, (res) =>
         {
-            GlobalData.StoreManager.OpenStore(blacksmithData.Store);
+            G.StoreManager.OpenStore(blacksmithData.Store);
         });
     }
 }

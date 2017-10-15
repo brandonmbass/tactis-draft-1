@@ -18,21 +18,21 @@ public class Guard : CharacterBase
         {
             if (guardData.MakeArrows.Status == QuestStatus.Started)
             {
-                GlobalData.DialogManager.RunQuestDialog(guardData.MakeArrows, this, (res) =>
+                G.DialogManager.RunQuestDialog(guardData.MakeArrows, this, (res) =>
                 {
                 });
                 return;
             }
         }
 
-        GlobalData.DialogManager.RunDialog(DialogManager.GuardGreeting, this, (res) =>
+        G.DialogManager.RunDialog(DialogManager.GuardGreeting, this, (res) =>
         {
             if (res == DialogResult.Res1.Result)
             {
                 // Player accepted the quest
                 playerQuestData.Quests.Add(guardData.MakeArrows);
                 guardData.MakeArrows.Status = QuestStatus.Started;
-                GlobalData.ChatManager.AddText("Entry added to log.");
+                G.ChatManager.AddText("Entry added to log.");
             }
         });
     }

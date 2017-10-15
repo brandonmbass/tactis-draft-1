@@ -12,7 +12,7 @@ public class Lumberjack : CharacterBase
     {
         var lumberjackData = GameObject.Find("_GLOBAL_DATA_/CharacterData/LumberjackData").GetComponent<LumberjackData>();
         
-        GlobalData.DialogManager.RunDialog(DialogManager.LumberjackGreeting, this, (res) =>
+        G.DialogManager.RunDialog(DialogManager.LumberjackGreeting, this, (res) =>
         {
         });
     }

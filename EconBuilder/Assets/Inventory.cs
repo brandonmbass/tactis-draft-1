@@ -1,11 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Truncon.Collections;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
-    Truncon.Collections.OrderedDictionary<ItemType, ItemStack> _contents;
+    OrderedDictionary<ItemType, ItemStack> _contents = new OrderedDictionary<ItemType, ItemStack>();
+    OrderedDictionary<ResourceType, int> _resources = new OrderedDictionary<ResourceType, int>();
 
-    public void Store(ItemType itemType, int count = 1)
+    public Inventory()
+    {
+        foreach (var resource in Enum.GetValues(typeof(ResourceType)))
+        {
+            _resources[(ResourceType)resource] = 0;
+        }
+    }
+
+    public void Add(int count, ItemType itemType)
     {
         if (_contents.ContainsKey(itemType))
         {
@@ -17,7 +28,12 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public void Store(ItemStack addedStack)
+    public void Add(int count, ResourceType resourceType)
+    {
+        _resources[resourceType] += count;
+    }
+
+    public void Add(ItemStack addedStack)
     {
         var itemType = addedStack.Item;
         if (_contents.ContainsKey(itemType))
@@ -39,7 +55,22 @@ public class Inventory : MonoBehaviour {
         return 0;
     }
 
-    public int Remove(ItemType itemType, int quantity)
+    public int Count(ResourceType resourceType)
+    {
+        return _resources[resourceType];
+    }
+
+    public bool Has(int count, ItemType itemType)
+    {
+        return Count(itemType) >= count;
+    }
+
+    public bool Has(int count, ResourceType resourceType)
+    {
+        return Count(resourceType) >= count;
+    }
+
+    public int Remove(int quantity, ItemType itemType)
     {
         if (!_contents.ContainsKey(itemType))
         { 
@@ -61,7 +92,7 @@ public class Inventory : MonoBehaviour {
         return removed;
     }
 
-    public ItemStack RetrieveAll(ItemType itemType)
+    public ItemStack TakeAll(ItemType itemType)
     {
         if (!_contents.ContainsKey(itemType))
         {
@@ -73,34 +104,35 @@ public class Inventory : MonoBehaviour {
         return itemStack;
     }
 
-    public ItemStack Retrieve(ItemType itemType, int quantity)
+    public ItemStack Take(int quantity, ItemType itemType)
     {
         if (!_contents.ContainsKey(itemType))
         {
             return null;
         }
 
-        var removed = Remove(itemType, quantity);
+        var removed = Remove(quantity, itemType);
 
         return new ItemStack(itemType, removed);
     }
 
-    public ItemStack RetrieveAllAt(int index) {
-        var key = _contents.GetKey(index);
-        return RetrieveAll(key);
-    }
+    // This feels like the caller has to have knowledge of the ordering in the inventory; seems like it should never happen
+    //public ItemStack RetrieveAllAt(int index) {
+    //    var key = _contents.GetKey(index);
+    //    return RetrieveAll(key);
+    //}
 
-    public ItemStack RetrieveAt(int index, int quantity)
-    {
-        var key = _contents.GetKey(index);
-        return Retrieve(key, quantity);
-    }
+    //public ItemStack RetrieveAt(int index, int quantity)
+    //{
+    //    var key = _contents.GetKey(index);
+    //    return Take(key, quantity);
+    //}
 
     public void GiveAll(Inventory other)
     {
         foreach(var content in _contents)
         {
-            other.Store(content.Value);
+            other.Add(content.Value);
         }
         _contents.Clear();
     }
@@ -129,13 +161,4 @@ public class Inventory : MonoBehaviour {
         get { return _contents[i];  }
         set { _contents[i] = value; }
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

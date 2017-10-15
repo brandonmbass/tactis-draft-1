@@ -52,6 +52,9 @@ public class UIManager : GlobalBehavior {
     public void ToggleCraftingDialog()
     {
         this.craftingDialog.SetActive(!craftingDialog.activeSelf);
+
+        // TODO: if I put this in Start of this component, it doesn't display properly. Why not? Can we fix this? This doesn't belong here
+        this.craftingDialog.GetComponent<CraftingWindow>().Init();
     }
 
     public void TogglePlayerInventory()

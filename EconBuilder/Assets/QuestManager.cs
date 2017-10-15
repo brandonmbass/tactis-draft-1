@@ -9,7 +9,7 @@ public enum QuestStatus
     Started,
     Abandoned,
     Failed,
-    Compelted
+    Completed
 }
 
 public class Quest
