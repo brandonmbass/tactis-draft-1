@@ -6,6 +6,7 @@ using System.Text;
 
 public class Recipe
 {
+    // TODO: Should Result + ResultCount just be one ItemStack? Or, should we get rid of ItemStack class?
     public ItemType Result { get; set; }
     public List<ItemStack> Materials { get; set; }
     public List<IUsable> Requirements { get; set; }

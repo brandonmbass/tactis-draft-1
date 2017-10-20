@@ -82,6 +82,12 @@ public class EconEventArgs
         return this;
     }
 
+    public EconEventArgs RemoveAllKeys()
+    {
+        KeysPressed.Clear();
+        return this;
+    }
+
     public EconEventArgs ClearKeys()
     {
         KeysPressed.Clear();
