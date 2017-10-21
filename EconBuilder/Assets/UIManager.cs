@@ -21,7 +21,7 @@ public class UIManager : GlobalBehavior {
     public GameObject DialogAnswer2Text;
     public GameObject craftingDialog;
     public QuestWindow questWindow;
-    public GameObject playerInventory;
+    public InventoryUI playerInventory;
 
     // Use this for initialization
     void Start () {
@@ -41,7 +41,8 @@ public class UIManager : GlobalBehavior {
         DialogAnswer2Text = ui.transform.Find("DialogContainer/Answer2/Text").gameObject;
         craftingDialog = ui.transform.Find("CraftingWindow").gameObject;
         questWindow = ui.transform.Find("QuestWindow").GetComponent<QuestWindow>();
-        playerInventory = ui.transform.Find("Inventory").gameObject;
+        playerInventory = ui.transform.Find("Inventory").GetComponent<InventoryUI>();
+        playerInventory.Inventory = G.CurrentCharacter.Inventory;
     }
 	
     public void ToggleSettingsDialog()
@@ -59,7 +60,7 @@ public class UIManager : GlobalBehavior {
 
     public void TogglePlayerInventory()
     {
-        this.playerInventory.SetActive(!playerInventory.activeSelf);
+        playerInventory.Toggle();
     }
 
     public void ToggleQuestDialog()

@@ -1,21 +1,46 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour {
-
-    public Inventory inventory;
-    public GameObject list;
-    GameObject prefabInventoryItem = Resources.Load("Prefabs/InventoryItem") as GameObject;
-
-    public InventoryUI(Inventory inv)
+    private GridLayoutGroup grid; 
+    void Start()
     {
-        inventory = inv;
-        foreach(var stack in inventory)
+        
+    }
+
+    Inventory _inventory;
+    public Inventory Inventory
+    {
+        set
         {
-            var item = Instantiate(prefabInventoryItem);
-            item.transform.SetParent(list.transform);
+            _inventory = value;
+            _inventory.UpdateEvent.AddListener((args) => {
+                DrawIcons();
+            });
+            DrawIcons();
         }
+    
+    }
+
+    public void DrawIcons()
+    {
+        grid = transform.FindChild("ItemGrid").GetComponent<GridLayoutGroup>();
+        //TODO clear the list first
+        foreach (var stack in _inventory)
+        {
+            var iconPath = stack.Item.InventoryIcon;
+            var icon = Instantiate(Resources.Load<Image>("Icons/axe"));
+            var t = icon.transform;
+            var gt = grid.transform;
+            t.SetParent(gt, false);
+        }
+    }
+
+    internal void Toggle()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 }   

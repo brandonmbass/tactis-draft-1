@@ -8,8 +8,11 @@ public class Inventory : MonoBehaviour {
     OrderedDictionary<ItemType, ItemStack> _contents = new OrderedDictionary<ItemType, ItemStack>();
     OrderedDictionary<ResourceType, int> _resources = new OrderedDictionary<ResourceType, int>();
 
-    public Inventory()
+    public EconEvent UpdateEvent { get; set; }
+
+    public void Start()
     {
+        UpdateEvent = new EconEvent();
         foreach (var resource in Enum.GetValues(typeof(ResourceType)))
         {
             _resources[(ResourceType)resource] = 0;
@@ -26,6 +29,7 @@ public class Inventory : MonoBehaviour {
         {
             _contents.Add(itemType, new ItemStack(itemType, count));
         }
+        UpdateEvent.Invoke();
     }
 
     public void Add(int count, ResourceType resourceType)
@@ -44,6 +48,7 @@ public class Inventory : MonoBehaviour {
         {
             _contents.Add(itemType, addedStack);
         }
+        UpdateEvent.Invoke();
     }
 
     public int Count(ItemType itemType)
@@ -89,6 +94,8 @@ public class Inventory : MonoBehaviour {
             removed = count;
             _contents.Remove(itemType);
         }
+
+        UpdateEvent.Invoke();
         return removed;
     }
 
@@ -101,6 +108,8 @@ public class Inventory : MonoBehaviour {
 
         var itemStack = _contents[itemType];
         _contents.Remove(itemType);
+
+        UpdateEvent.Invoke();
         return itemStack;
     }
 
@@ -113,20 +122,9 @@ public class Inventory : MonoBehaviour {
 
         var removed = Remove(quantity, itemType);
 
+        UpdateEvent.Invoke();
         return new ItemStack(itemType, removed);
     }
-
-    // This feels like the caller has to have knowledge of the ordering in the inventory; seems like it should never happen
-    //public ItemStack RetrieveAllAt(int index) {
-    //    var key = _contents.GetKey(index);
-    //    return RetrieveAll(key);
-    //}
-
-    //public ItemStack RetrieveAt(int index, int quantity)
-    //{
-    //    var key = _contents.GetKey(index);
-    //    return Take(key, quantity);
-    //}
 
     public void GiveAll(Inventory other)
     {
@@ -135,11 +133,13 @@ public class Inventory : MonoBehaviour {
             other.Add(content.Value);
         }
         _contents.Clear();
+        UpdateEvent.Invoke();
     }
 
     public void TakeAll(Inventory other)
     {
         other.GiveAll(this);
+        UpdateEvent.Invoke();
     }
 
     public int Count()
@@ -161,4 +161,5 @@ public class Inventory : MonoBehaviour {
         get { return _contents[i];  }
         set { _contents[i] = value; }
     }
+
 }
